@@ -30,32 +30,6 @@ roi_names <- c("Left caudal anterior cingulate", "Left caudal middle frontal",
                "Right superior parietal", "Right superior temporal", "Right supramarginal",
                "Right transverse temporal", "Right insula")
 
-#demographics
-summary(AGE)
-summ_geral <- df %>% #tabela sumário da faixa etária
-  summarise(across(AGE, list(median = median, mean = mean, sd = sd, n = length)))
-summ_geral
-summ_groups <- df %>% group_by(SEX, DX_GROUP) %>% #tabela sumário da faixa etária por grupo
-  summarise(across(AGE, list(median = median, mean = mean, sd = sd, n = length)))
-summ_groups
-summ_sex <- df %>% group_by(SEX) %>% #tabela sumário da faixa etária por gênero
-  summarise(across(AGE, list(median = median, mean = mean, sd = sd, n = length)))
-summ_sex
-summ_dx <- df %>% group_by(DX_GROUP) %>% #tabela sumário da faixa etária por diag
-  summarise(across(AGE, list(median = median, mean = mean, sd = sd, n = length)))
-summ_dx
-
-write.table(format(as.data.frame(summ_geral),digits = 4), "18a24.csv", sep = ",", quote = F, row.names = F)
-write.table(format(as.data.frame(summ_groups),digits = 4), "18a24grupos.csv", sep = ",", quote = F, row.names = F)
-write.table(format(as.data.frame(summ_sex),digits = 4), "18a24sex.csv", sep = ",", quote = F, row.names = F)
-write.table(format(as.data.frame(summ_dx),digits = 4), "18a24dx.csv", sep = ",", quote = F, row.names = F)
-
-histog <- ggplot(df, aes(x = AGE)) +
-  geom_histogram(fill = "white", colour = "black") +
-  facet_grid(df$SEX ~ df$DX_GROUP)
-histog
-ggsave("18a24.png")
-
 
 #primeiro modelo
 #outcome: CT    predictor: dx   cov: gender, site, totalCT
