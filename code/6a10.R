@@ -1,6 +1,4 @@
-setwd("/home/gisele/Documentos/ABIDE")
 load("./data/df.RData")
-setwd("./results")
 attach(df)
 if(!require(pacman)) install.packages("pacman")
 library(pacman)

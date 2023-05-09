@@ -1,12 +1,15 @@
 load("./data/df.RData")
-setwd("./results")
+# setwd("./results")
 attach(df)
+if(!require(pacman)) install.packages("pacman")
+library(pacman)
+pacman::p_load(dplyr, gtsummary, reshape2, ggplot2, gtools)
 
 ### DEMOGRAPHICS FOR THE WHOLE SAMPLE ###
 # Summary tables for age, divided by SEX, DIAGNOSTIC GROUP and SEXxDIAGNOSIS
 # Includes median, mean, standard deviation (sd) and number of individuals
 age_geral <- df %>%
-  select(AGE, SEX, DX_GROUP) %>%
+  select(AGE, SEX, DX_GROUP, GROUP) %>%
   tbl_summary(by=SEX)
   # summarise(across(AGE, list(median = median, mean = mean, sd = sd, n = length)))
 age_geral

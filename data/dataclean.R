@@ -1,6 +1,5 @@
 library(ggplot2)
-setwd("/home/gisele/Documentos/ABIDE")
-banco <- read.csv("clean_Phenotypic_V1_0b_preprocessed1.csv")
+banco <- read.csv("./data/clean_Phenotypic_V1_0b_preprocessed1.csv")
 attach(banco)
 head(banco)
 summary(banco)
@@ -70,7 +69,7 @@ df$SRS_MANNERISMS[df$SRS_MANNERISMS==-9999] <- NA
 df$SCQ_TOTAL[df$SCQ_TOTAL==-9999] <- NA
 
 
-save("df", file="/home/gisele/Documentos/ABIDE/df.RData")
+save("df", file="/home/gisele/Documentos/Mestrado/Pesquisa/ABIDE/gender-and-asd/data/df.RData")
 
 
 
