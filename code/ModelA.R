@@ -5,7 +5,7 @@ if(!require(pacman)) install.packages("pacman")
 library(pacman)
 pacman::p_load(dplyr, car, ordinal, lmtest, gtsummary, reshape2, ggplot2, gtools)
 
-### FIRST MODEL ###
+### MODEL A ###
 ## outcome: CT    predictor: dx   cov: gender, site, totalCT
 
 # Defines names of ROIs 
@@ -32,7 +32,7 @@ roi_names <- c("Left caudal anterior cingulate", "Left caudal middle frontal",
                "Right transverse temporal", "Right insula")
 
 
-### AGE RANGE 1 -> 6 to 10 yo ###
+############ AGE RANGE 1 -> 6 to 10 yo ############
 # Defines age range
 df1 <- subset(df, AGE<11)
 attach(df1)
@@ -74,15 +74,15 @@ results_m4_1fdr[,4] <- p.adjust(results_m4_1[,4],method = "fdr")
 results_m5_1fdr[,4] <- p.adjust(results_m5_1[,4],method = "fdr")
 
 # Saves summary table with results
-write.table(format(results_m1_1fdr, digits = 5, scientific = F),"6_10Model1.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m2_1fdr, digits = 5, scientific = F),"6_10M1Sex.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m3_1fdr, digits = 5, scientific = F),"6_10M1Sex_site.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m4_1fdr, digits = 5, scientific = F),"6_10M1Sex_totalV.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m5_1fdr, digits = 5, scientific = F),"6_10M1Sex_site_totalV.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m1_1fdr, digits = 5, scientific = F),"6_10ModelA.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m2_1fdr, digits = 5, scientific = F),"6_10M_A_Sex.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m3_1fdr, digits = 5, scientific = F),"6_10M_A_Sex_site.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m4_1fdr, digits = 5, scientific = F),"6_10M_A_Sex_totalV.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m5_1fdr, digits = 5, scientific = F),"6_10M_A_Sex_site_totalV.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
 
 
 
-### AGE RANGE 2 -> 11 to 14 yo ###
+############ AGE RANGE 2 -> 11 to 14 yo ############
 # Defines age range
 df11_14 <- subset(df, AGE>=11 & AGE<15)
 attach(df11_14)
@@ -125,14 +125,14 @@ results_m5_2fdr[,4] <- p.adjust(results_m5_2[,4],method = "fdr")
 
 # Saves summary table with results
 write.table(format(results_m1_2fdr, digits = 5, scientific = F),"11_14Model1.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m2_2fdr, digits = 5, scientific = F),"11_14M1Sex.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m3_2fdr, digits = 5, scientific = F),"11_14M1Sex_site.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m4_2fdr, digits = 5, scientific = F),"11_14M1Sex_totalV.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m5_2fdr, digits = 5, scientific = F),"11_14M1Sex_site_totalV.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m2_2fdr, digits = 5, scientific = F),"11_14M_A_Sex.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m3_2fdr, digits = 5, scientific = F),"11_14M_A_Sex_site.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m4_2fdr, digits = 5, scientific = F),"11_14M_A_Sex_totalV.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m5_2fdr, digits = 5, scientific = F),"11_14M_A_Sex_site_totalV.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
 
 
 
-### AGE RANGE 3 -> 15 to 17 yo ###
+############ AGE RANGE 3 -> 15 to 17 yo ############
 # Defines age range
 df15_17 <- subset(df, AGE>=15 & AGE<18)
 attach(df15_17)
@@ -175,14 +175,14 @@ results_m5_3fdr[,4] <- p.adjust(results_m5_3[,4],method = "fdr")
 
 # Saves summary table with results
 write.table(format(results_m1_3fdr, digits = 5, scientific = F),"15_17Model1.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m2_3fdr, digits = 5, scientific = F),"15_17M1Sex.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m3_3fdr, digits = 5, scientific = F),"15_17M1Sex_site.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m4_3fdr, digits = 5, scientific = F),"15_17M1Sex_totalV.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m5_3fdr, digits = 5, scientific = F),"15_17M1Sex_site_totalV.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m2_3fdr, digits = 5, scientific = F),"15_17M_A_Sex.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m3_3fdr, digits = 5, scientific = F),"15_17M_A_Sex_site.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m4_3fdr, digits = 5, scientific = F),"15_17M_A_Sex_totalV.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m5_3fdr, digits = 5, scientific = F),"15_17M_A_Sex_site_totalV.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
 
 
 
-### AGE RANGE 4 -> 18 to 24 yo ###
+############ AGE RANGE 4 -> 18 to 24 yo ############
 # Defines age range
 df18_24 <- subset(df, AGE>17)
 attach(df18_24)
@@ -225,8 +225,8 @@ results_m5_4fdr[,4] <- p.adjust(results_m5_4[,4],method = "fdr")
 
 # Saves summary table with results
 write.table(format(results_m1_4fdr, digits = 5, scientific = F),"18_24Model1.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m2_4fdr, digits = 5, scientific = F),"18_24M1Sex.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m3_4fdr, digits = 5, scientific = F),"18_24M1Sex_site.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m4_4fdr, digits = 5, scientific = F),"18_24M1Sex_totalV.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m5_4fdr, digits = 5, scientific = F),"18_24M1Sex_site_totalV.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m2_4fdr, digits = 5, scientific = F),"18_24M_A_Sex.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m3_4fdr, digits = 5, scientific = F),"18_24M_A_Sex_site.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m4_4fdr, digits = 5, scientific = F),"18_24M_A_Sex_totalV.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m5_4fdr, digits = 5, scientific = F),"18_24M_A_Sex_site_totalV.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
 
