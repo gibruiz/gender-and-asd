@@ -2,7 +2,7 @@ load("./data/df.RData")
 attach(df)
 if(!require(pacman)) install.packages("pacman")
 library(pacman)
-pacman::p_load(dplyr, car, ordinal, lmtest, gtsummary, reshape2, ggplot2, gtools)
+pacman::p_load(dplyr, car, ordinal, lmtest, gtsummary, reshape2, ggplot2, gtools, gt)
 
 
 #Defining age range
@@ -26,7 +26,7 @@ roi_names <- c("Left caudal anterior cingulate", "Left caudal middle frontal",
                "Right middle temporal", "Right parahippocampal", "Right paracentral",
                "Right pars opercularis", "Right pars orbitalis", "Right pars triangularis",
                "Right pericalcarine", "Right postcentral", "Right posterior cingulate",
-               "Right precentral",  "Right precuneus", "Right rostral anterior cingulate",
+               "Right precentral", "Right precuneus", "Right rostral anterior cingulate",
                "Right rostral middle frontal", "Right superior frontal",
                "Right superior parietal", "Right superior temporal", "Right supramarginal",
                "Right transverse temporal", "Right insula")
@@ -179,35 +179,54 @@ mltcln
 confint(m)
 
 #defining blank array for model results
-results_6m1  <-array(0,c(62,5))
+results_6m1  <-array(0,c(62,3))
 #defining blank string to register significant results
 sig_6m1 <- rep(NA,62)
+tables <- as.list(sig_6m1)
 
+results_6m1[1,] <- a
 m6m1 <- MASS::polr(GROUP ~ Mean_1002 + SITE_ID, data=df, Hess = T)
 summary(m6m1)
 lmtest::coeftest(m6m1)#[1,4]
 coef(m6m1)
 confint(m6m1)#[1,]
-gtsummary::tbl_regression(m6m1, exponentiate = TRUE,
-                         estimate_fun = purrr::partial(style_ratio, digits = 3)) %>% 
-  gtsummary::add_global_p()
+car::poTest(m6m1)
+a <- gtsummary::tbl_regression(m6m1, exponentiate = T
+                         , estimate_fun = purrr::partial(style_ratio, digits = 3)
+                         # , include = !SITE_ID
+                         # , label = list(df[,33] ~ roi_names[1])
+                         , tidy_fun = broom.mixed::tidy
+                         ) %>% 
+  gtsummary::add_global_p() %>% 
+  gtsummary::add_significance_stars(
+    hide_p = F, hide_se = T, hide_ci = F,
+    pattern = "{p.value}{stars}")
+a
 
-##ordinal model for each ROI
-#binds Odds Ratio with 95% CI, p values and stars for significance
+
+## Ordinal model for each ROI
+# Binds Odds Ratio with 95% CI, p values and stars for significance
 for (i in 1:62){ 
   m6m1 <- MASS::polr(GROUP ~ df[,i+32] + SITE_ID, data=df, Hess = T)
-  results_6m1[i,] <- cbind(exp(OR = coef(m6m1)[4]), exp(t(confint(m6m1)[1,])),
-                           p = lmtest::coeftest(m6m1)[1,4],
-                           stars.pval(lmtest::coeftest(m6m1)[1,4]))
+  # results_6m1[i,] <- cbind(exp(OR = coef(m6m1)[4]), exp(t(confint(m6m1)[1,])),
+  #                          p = lmtest::coeftest(m6m1)[1,4],
+  #                          stars.pval(lmtest::coeftest(m6m1)[1,4]))
   if(lmtest::coeftest(m6m1)[1,4] < 0.05){
     sig_6m1[i] <- i+32
   }
+  tables[[i]] <- gtsummary::tbl_regression(m6m1, exponentiate = TRUE
+                                         , estimate_fun = purrr::partial(style_ratio, digits = 3)
+                                         , include = !SITE_ID
+  ) %>% 
+    gtsummary::add_global_p()
 }
+tables
+gtsummary::tbl_stack()
 results_6m1
 sig_6m1 <- sig_6m1[!is.na(sig_6m1)]
 sig_6m1
 results_6m1 <- data.frame(roi_names, results_6m1)# junta tabela dos coeficientes resultado com os nomes das regioes
-write.table(format(results_6m1, digits = 5, scientific = F),"6_10Modelo6.csv",
+write.table(format(results_6m1, digits = 5, scientific = F),"6_10ModelF.csv",
             sep = ",",row.names = F, quote = F, col.names = c("ROI name", "OR",
                                                               "p-value", "")) #salva cada tabela com o nome correspondente
 
@@ -219,29 +238,29 @@ write.table(format(results_6m1, digits = 5, scientific = F),"6_10Modelo6.csv",
 results_7m1  <-array(0,c(62,5))
 df$SITE_ID <- as.factor(df$SITE_ID)
 attach(df)
-m6m1 <- clmm(GROUP ~ AGE + Mean_1010 + (1|SITE_ID), data=df, Hess = T)
+m6m1 <- clmm(GROUP ~ df[,33] + (1|SITE_ID), data=df, Hess = T)
 lmtest::coeftest(m6m1)[4,1:4]
 # car::poTest(m6m1)
 # m <- lm(Mean_1002 ~ Mean_101 + SITE_ID, data = df)
 # car::vif(m)
 
 for (i in 1:62){ #for pra fazer cada modelo usando cada roi
-  m6m1 <-clmm2(GROUP ~ df[,i+32] + (subject|SITE_ID), data=df, Hess = T)
-  results_6m1[i,] <- cbind(exp(cbind(OR = coef(m6m1)[4], t(confint(m6m1)[4,]))),
-                           p = lmtest::coeftest(m6m1)[4,4])
+  m6m1 <-clmm2(GROUP ~ df[,i+32] + (1|SITE_ID), data=df, Hess = T)
+  results_6m1[i,] <- as_tibble(cbind(OR = exp(coef(m6m1)[4]), t(confint(m6m1)[4,]),
+                                     p = lmtest::coeftest(m6m1)[4,4]))
   #colocando os coeficientes resultado do modelo na tabela q tava em branco
   #OR = odds ratio, pega o estimate só do geral do modelo
   #segunda e terceira coluna = intervalo de confiança
   #p = p valor
-  if (inherits(t, "try-error")){
-    m6m1 <-clmm(GROUP ~ df[,i+32] + (subject|SITE_ID), data=df, Hess = T, link = 'probit')
-    results_6m1[i,] <- cbind(exp(cbind(OR = coef(m6m1)[4], t(confint(m6m1)[4,]))),
-                           p = lmtest::coeftest(m6m1)[4,4])
-  }
+  # if (inherits(t, "try-error")){
+  #   m6m1 <-clmm(GROUP ~ df[,i+32] + (subject|SITE_ID), data=df, Hess = T, link = 'probit')
+  #   results_6m1[i,] <- as_tibble(cbind(OR = exp(coef(m6m1)[4]), t(confint(m6m1)[4,]),
+  #                          p = lmtest::coeftest(m6m1)[4,4]))
+  # }
   print(results_6m1[i,])
 }
 results_6m1
-results_6m1 <- data.frame(roi_names, results_6m1)# junta tabela dos coeficientes resultado com os nomes das regioes
+results_6m1 <- as_tibble(cbind("Characteristic" = roi_names, results_6m1))# junta tabela dos coeficientes resultado com os nomes das regioes
 write.table(format(results_6m1, digits = 5, scientific = F),"6_10Modelo6.csv",
             sep = ",",row.names = F, quote = F, col.names = c("ROI name", "OR",
                                                               "Std. Error", "t value", "p-value (FDR corrected)")) #salva cada tabela com o nome correspondente
@@ -249,7 +268,9 @@ write.table(format(results_6m1, digits = 5, scientific = F),"6_10Modelo6.csv",
 
 
 library(reshape2)
-df.m <- melt(df[,sig_6m1], id = 'GROUP') #redefinir pra pegar só colunas que foram sig
+df.m <- df %>%
+  select(GROUP, all_of(sig_6m1_random))
+df.m <- melt(df.m, id.vars = 'GROUP') #redefinir pra pegar só colunas que foram sig
 sizes <- ggplot(df.m, aes(y = value)) +
   geom_boxplot(aes(x=GROUP, y = value))+
   facet_wrap( ~ variable)
