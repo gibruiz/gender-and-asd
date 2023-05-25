@@ -1,9 +1,8 @@
 load("./data/df.RData")
 setwd("./results")
-attach(df)
 if(!require(pacman)) install.packages("pacman")
 library(pacman)
-pacman::p_load(dplyr, car, ordinal, lmtest, gtsummary, reshape2, ggplot2, gtools)
+pacman::p_load(dplyr, car, ordinal, lmtest, gtsummary, reshape2, ggplot2, gtools, forcats)
 
 ######## MODELS F and G ########
 #outcome: group    predictor: CT   cov: site
@@ -35,6 +34,7 @@ roi_names <- c("Left caudal anterior cingulate", "Left caudal middle frontal",
 ############ AGE RANGE 1 -> 6 to 10 yo ############
 # Defines age range
 df6_10 <- subset(df, AGE<11)
+df6_10$SITE_ID <- droplevels(df6_10$SITE_ID)
 attach(df6_10)
 
 #### Checking multicollinearity
@@ -47,7 +47,6 @@ for (i in 1:62){
 }
 # Collinearity results, expect values<10
 mltcln
-confint(m1)
 
 
 ###### ORDINAL MODELS
@@ -56,23 +55,29 @@ sig_m_1     <- rep(NA,62)
 # Defining blank list for model results
 results_m_1 <- as.list(rep(NA,62))
 # Defining blank list for the proportional odds test
-pr_odds     <- as.list(rep(NA,62))
-pr_odds
+pr_odds.A   <- as.list(rep(NA,62))
+pr_odds.B   <- as.list(rep(NA,62))
+pr_odds.C   <- as.list(rep(NA,62))
+pr_odds.A
 
 ## MODEL F: Ordinal model for each ROI with fixed effects
 # Proportional odds test
 # Summary table: Odds Ratio with 95% CI, p values and stars for significance
 # Registers which models were significant to run Model G
 for (i in 1:62){
-  m_1 <- MASS::polr(GROUP ~ df6_10[,i+32] + SITE_ID, data=df6_10, Hess = T)
-  # pr_odds[i]        <- car::poTest(m_1)
+  m_1.A <- MASS::polr(GROUP.A ~ Mean_2035 + SITE_ID, data=df6_10, Hess = T)
+  # m_1.B <- MASS::polr(GROUP.B ~ df6_10[,i+32] + SITE_ID, data=df6_10, Hess = T)
+  # m_1.C <- MASS::polr(GROUP.C ~ df6_10[,i+32] + SITE_ID, data=df6_10, Hess = T)
+  try(pr_odds.A[i]        <- car::poTest(m_1.A))
+  # pr_odds.B[i]        <- car::poTest(m_1.B)
+  # pr_odds.C[i]        <- car::poTest(m_1.C)
   # results_m_1[[i]]  <- gtsummary::tbl_regression(m_1, exponentiate = T,
   #                                                estimate_fun = purrr::partial(style_ratio, digits = 3),
   #                                                include = !SITE_ID,
   #                                                label = list(df6_10[,i+32] ~ roi_names[i])
   #                                                ) %>% gtsummary::add_global_p() %>% 
   #   gtsummary::add_significance_stars(hide_p = F, hide_se = T, hide_ci = F, pattern = "{p.value}{stars}")
-  if(lmtest::coeftest(m_1)[1,4] < 0.05) {sig_m_1[i] <- i+32}
+  # if(lmtest::coeftest(m_1)[1,4] < 0.05) {sig_m_1[i] <- i+32}
 }
 gt::gtsave(as_gt(gtsummary::tbl_stack(results_m_1)), filename = "6_10ModelF.png")
 sig_m_1 <- sig_m_1[!is.na(sig_m_1)]
@@ -141,12 +146,12 @@ pr_odds     <- as.list(rep(NA,62))
 # Registers which models were significant to run Model G
 for (i in 1:62){
   m_2 <- MASS::polr(GROUP ~ df11_14[,i+32] + SITE_ID, data=df11_14, Hess = T)
-  pr_odds[i]        <- car::poTest(m_2)
-  results_m_2[[i]]  <- gtsummary::tbl_regression(m_2, exponentiate = T,
-                                                 estimate_fun = purrr::partial(style_ratio, digits = 3),
-                                                 include = !SITE_ID,
-                                                 label = list(df11_14[,i+32] ~ roi_names[i])
-                                                 ) %>% gtsummary::add_global_p() %>% 
+  # pr_odds[i]        <- car::poTest(m_2)
+  results_m_2[[i]]  <- gtsummary::tbl_regression(m_2, exponentiate = T
+                                                 , estimate_fun = purrr::partial(style_ratio, digits = 3)
+                                                 , include = !SITE_ID
+                                                 # , label = list(df11_14[,i+32] ~ roi_names[i])
+                                                 ) %>% gtsummary::add_global_p() %>%
     gtsummary::add_significance_stars(hide_p = F, hide_se = T, hide_ci = F, pattern = "{p.value}{stars}")
   if(lmtest::coeftest(m_2)[1,4] < 0.05) {sig_m_2[i] <- i+32}
 }

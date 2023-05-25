@@ -55,7 +55,7 @@ df$GROUP.A <- factor(df$GROUP.A, levels = c("Female.Ctrl", "Male.Ctrl", "Female.
 df$GROUP.B <- factor(df$GROUP.A, levels = c("Female Ctrl", "Male Ctrl", "Male ASD", "Female ASD"),
                      ordered = T)
 df$GROUP.C <- df$GROUP.B %>% fct_collapse(ASD = c("Male ASD", "Female ASD"))
-df$SITE_ID <- as.factor(df$SITE_ID)
+# df$SITE_ID <- as.factor(df$SITE_ID)
 attach(df)
 head(df)
 

@@ -73,11 +73,11 @@ results_m4_1fdr[,4] <- p.adjust(results_m4_1[,4],method = "fdr")
 results_m5_1fdr[,4] <- p.adjust(results_m5_1[,4],method = "fdr")
 
 # Saves summary table with results
-write.table(format(results_m1_1fdr, digits = 5, scientific = F),"6_10ModelA.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m2_1fdr, digits = 5, scientific = F),"6_10M_A_Sex.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m3_1fdr, digits = 5, scientific = F),"6_10M_A_Sex_site.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m4_1fdr, digits = 5, scientific = F),"6_10M_A_Sex_totalV.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m5_1fdr, digits = 5, scientific = F),"6_10M_A_Sex_site_totalV.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m1_1fdr, digits = 5, scientific = F),"6_10ModelB.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m2_1fdr, digits = 5, scientific = F),"6_10M_B_Sex.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m3_1fdr, digits = 5, scientific = F),"6_10M_B_Sex_site.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m4_1fdr, digits = 5, scientific = F),"6_10M_B_Sex_totalV.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m5_1fdr, digits = 5, scientific = F),"6_10M_B_Sex_site_totalV.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
 
 
 
@@ -123,11 +123,11 @@ results_m4_2fdr[,4] <- p.adjust(results_m4_2[,4],method = "fdr")
 results_m5_2fdr[,4] <- p.adjust(results_m5_2[,4],method = "fdr")
 
 # Saves summary table with results
-write.table(format(results_m1_2fdr, digits = 5, scientific = F),"11_14Model1.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m2_2fdr, digits = 5, scientific = F),"11_14M_A_Sex.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m3_2fdr, digits = 5, scientific = F),"11_14M_A_Sex_site.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m4_2fdr, digits = 5, scientific = F),"11_14M_A_Sex_totalV.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m5_2fdr, digits = 5, scientific = F),"11_14M_A_Sex_site_totalV.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m1_2fdr, digits = 5, scientific = F),"11_14ModelB.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m2_2fdr, digits = 5, scientific = F),"11_14M_B_Sex.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m3_2fdr, digits = 5, scientific = F),"11_14M_B_Sex_site.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m4_2fdr, digits = 5, scientific = F),"11_14M_B_Sex_totalV.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m5_2fdr, digits = 5, scientific = F),"11_14M_B_Sex_site_totalV.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
 
 
 
@@ -173,11 +173,11 @@ results_m4_3fdr[,4] <- p.adjust(results_m4_3[,4],method = "fdr")
 results_m5_3fdr[,4] <- p.adjust(results_m5_3[,4],method = "fdr")
 
 # Saves summary table with results
-write.table(format(results_m1_3fdr, digits = 5, scientific = F),"15_17Model1.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m2_3fdr, digits = 5, scientific = F),"15_17M_A_Sex.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m3_3fdr, digits = 5, scientific = F),"15_17M_A_Sex_site.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m4_3fdr, digits = 5, scientific = F),"15_17M_A_Sex_totalV.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m5_3fdr, digits = 5, scientific = F),"15_17M_A_Sex_site_totalV.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m1_3fdr, digits = 5, scientific = F),"15_17ModelB.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m2_3fdr, digits = 5, scientific = F),"15_17M_B_Sex.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m3_3fdr, digits = 5, scientific = F),"15_17M_B_Sex_site.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m4_3fdr, digits = 5, scientific = F),"15_17M_B_Sex_totalV.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m5_3fdr, digits = 5, scientific = F),"15_17M_B_Sex_site_totalV.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
 
 
 
@@ -223,9 +223,9 @@ results_m4_4fdr[,4] <- p.adjust(results_m4_4[,4],method = "fdr")
 results_m5_4fdr[,4] <- p.adjust(results_m5_4[,4],method = "fdr")
 
 # Saves summary table with results
-write.table(format(results_m1_4fdr, digits = 5, scientific = F),"18_24Model1.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m2_4fdr, digits = 5, scientific = F),"18_24M_A_Sex.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m3_4fdr, digits = 5, scientific = F),"18_24M_A_Sex_site.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m4_4fdr, digits = 5, scientific = F),"18_24M_A_Sex_totalV.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
-write.table(format(results_m5_4fdr, digits = 5, scientific = F),"18_24M_A_Sex_site_totalV.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m1_4fdr, digits = 5, scientific = F),"18_24ModelB.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m2_4fdr, digits = 5, scientific = F),"18_24M_B_Sex.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m3_4fdr, digits = 5, scientific = F),"18_24M_B_Sex_site.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m4_4fdr, digits = 5, scientific = F),"18_24M_B_Sex_totalV.csv", sep = ",", row.names = F, quote = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
+write.table(format(results_m5_4fdr, digits = 5, scientific = F),"18_24M_B_Sex_site_totalV.csv", sep = ",", quote = F, row.names = F, col.names = c("ROI name", "Estimate", "Std. Error", "t value", "p-value (FDR corrected)"))
 
