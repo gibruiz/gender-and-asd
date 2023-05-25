@@ -1,4 +1,8 @@
 library(ggplot2)
+library(dplyr)
+library(forcats)
+
+
 banco <- read.csv("./data/clean_Phenotypic_V1_0b_preprocessed1.csv")
 attach(banco)
 head(banco)
@@ -7,11 +11,12 @@ banco$DX_GROUP <- as.factor(banco$DX_GROUP)
 levels(banco$DX_GROUP) <- c("ASD","Ctrl")
 
 head(banco$AGE)
-banco$AGE <- floor(banco$AGE) #arredonda idade p baixo
+banco$AGE <- floor(banco$AGE) # Rounds age down
 summary(banco$AGE)
 hist(banco$AGE)
 
-df1 <- subset(banco, FILE_ID!="no_filename" & AGE<=24) #deleta sujeitos sem arquivo
+# There are subjects with no correspondent file, I'm deleting their rows
+df1 <- subset(banco, FILE_ID!="no_filename" & AGE<=24)
 summary(df1)
 attach(df1)
 hist(df1$AGE)
@@ -19,32 +24,44 @@ hist(AGE_AT_SCAN)
 df1[,1]
 names(df1)
 
+# Selecting columns that will be used
 df2 <- df1[,5:35]
 names(df2)
 head(df2[,1])
-df2$filenames <- paste(FILE_ID,"_roi_thickness.txt",sep="") #criando coluna c nomes dos arquivos p puxar dps
+# Creates column with names of files for later
+df2$filenames <- paste(FILE_ID,"_roi_thickness.txt",sep="")
 attach(df2)
-head(filenames) #filenames eh uma string com os nomes dos arquivos na ordem certa
+head(filenames) # String with filenames in the same order as the dataframe
 head(FILE_ID)
 
-setwd("/home/gisele/Documentos/ABIDE/data/ANTS")
-ants <- do.call(rbind, lapply(filenames, read.delim)) #importa os arquivos na ordem do filenames
-ants <- ants[,38:99] #deleta volumes subcorticais
-df <- cbind(df2, ants) #juntando dataframe inicial com o criado importando ants
-somavol <- rowSums(ants) #soma volumes
+setwd("/home/gisele/Documentos/ABIDE/data/ANTS") # This is a relative path as I cannot upload these files
+
+# Imports files in the same order as filenames
+ants <- do.call(rbind, lapply(filenames, read.delim))
+# Deleting subcortical volumes
+ants <- ants[,38:99]
+df <- cbind(df2, ants)
+somavol <- rowSums(ants)
 df$TOTAL_VOLUME <- somavol
 
 head(df$TOTAL_VOLUME)
 head(df)
-attach(df)
 df$SEX <- as.factor(df$SEX)
 levels(df$SEX) <- c("Male", "Female")
-df$GROUP <- interaction(df$SEX, df$DX_GROUP)
-df$GROUP <- factor(df$GROUP, levels = c("Female.Ctrl", "Male.Ctrl", "Female.ASD", "Male.ASD"),
-                        ordered = T)
+df$GROUP.A <- interaction(df$SEX, df$DX_GROUP)
+df$GROUP.A <- factor(df$GROUP.A, levels = c("Female.Ctrl", "Male.Ctrl", "Female.ASD", "Male.ASD"),
+                     labels = c("Female Ctrl", "Male Ctrl", "Female ASD", "Male ASD"),
+                     ordered = T)
+df$GROUP.B <- factor(df$GROUP.A, levels = c("Female Ctrl", "Male Ctrl", "Male ASD", "Female ASD"),
+                     ordered = T)
+df$GROUP.C <- df$GROUP.B %>% fct_collapse(ASD = c("Male ASD", "Female ASD"))
+df$SITE_ID <- as.factor(df$SITE_ID)
+attach(df)
+head(df)
 
 
 df$SRS_MANNERISMS[df$SRS_MANNERISMS==-9999] <- NA
+df$ADI_R_SOCIAL_TOTAL_A[df$ADI_R_SOCIAL_TOTAL_A==-9999] <- NA
 df$ADI_R_VERBAL_TOTAL_BV[df$ADI_R_VERBAL_TOTAL_BV==-9999] <- NA
 df$ADI_RRB_TOTAL_C[df$ADI_RRB_TOTAL_C==-9999] <- NA
 df$ADI_R_ONSET_TOTAL_D[df$ADI_R_ONSET_TOTAL_D==-9999] <- NA
