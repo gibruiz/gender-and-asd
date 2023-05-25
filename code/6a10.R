@@ -202,23 +202,24 @@ a <- gtsummary::tbl_regression(m6m1, exponentiate = T
     hide_p = F, hide_se = T, hide_ci = F,
     pattern = "{p.value}{stars}")
 a
-
+pr_odds     <- as.list(rep(NA,10))
 
 ## Ordinal model for each ROI
 # Binds Odds Ratio with 95% CI, p values and stars for significance
 for (i in 1:62){ 
-  m6m1 <- MASS::polr(GROUP ~ df[,i+32] + SITE_ID, data=df, Hess = T)
+  m6m1 <- MASS::polr(GROUP ~ df6_10[,i+32] + SITE_ID, data=df6_10, Hess = T)
+  print(car::poTest(m6m1))
   # results_6m1[i,] <- cbind(exp(OR = coef(m6m1)[4]), exp(t(confint(m6m1)[1,])),
   #                          p = lmtest::coeftest(m6m1)[1,4],
   #                          stars.pval(lmtest::coeftest(m6m1)[1,4]))
-  if(lmtest::coeftest(m6m1)[1,4] < 0.05){
-    sig_6m1[i] <- i+32
-  }
-  tables[[i]] <- gtsummary::tbl_regression(m6m1, exponentiate = TRUE
-                                         , estimate_fun = purrr::partial(style_ratio, digits = 3)
-                                         , include = !SITE_ID
-  ) %>% 
-    gtsummary::add_global_p()
+  # if(lmtest::coeftest(m6m1)[1,4] < 0.05){
+  #   sig_6m1[i] <- i+32
+  # }
+  # tables[[i]] <- gtsummary::tbl_regression(m6m1, exponentiate = TRUE
+  #                                        , estimate_fun = purrr::partial(style_ratio, digits = 3)
+  #                                        , include = !SITE_ID
+  # ) %>% 
+  #   gtsummary::add_global_p()
 }
 tables
 gtsummary::tbl_stack()
