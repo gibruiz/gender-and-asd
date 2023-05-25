@@ -73,7 +73,7 @@ adir_6_10 <- df6_10 %>%
               missing_text = "Missing",
               label = list(ADI_R_SOCIAL_TOTAL_A ~ "ADI-R Social",
                            ADI_R_VERBAL_TOTAL_BV ~ "ADI-R Verbal",
-                           ADI_RRB_TOTAL_C ~ "ADI-R RBB")) %>%
+                           ADI_RRB_TOTAL_C ~ "ADI-R RRB")) %>%
   modify_header(all_stat_cols() ~  "**{level}**") %>% 
   bold_labels()
 tvolume_6_10 <- tbl_summary(df6_10, by = GROUP.A,
@@ -108,7 +108,7 @@ adir_11_14 <- df11_14 %>%
               missing_text = "Missing",
               label = list(ADI_R_SOCIAL_TOTAL_A ~ "ADI-R Social",
                            ADI_R_VERBAL_TOTAL_BV ~ "ADI-R Verbal",
-                           ADI_RRB_TOTAL_C ~ "ADI-R RBB")) %>%
+                           ADI_RRB_TOTAL_C ~ "ADI-R RRB")) %>%
   modify_header(all_stat_cols() ~  "**{level}**") %>% 
   bold_labels()
 
@@ -142,7 +142,7 @@ adir_15_17 <- df15_17 %>%
               missing_text = "Missing",
               label = list(ADI_R_SOCIAL_TOTAL_A ~ "ADI-R Social",
                            ADI_R_VERBAL_TOTAL_BV ~ "ADI-R Verbal",
-                           ADI_RRB_TOTAL_C ~ "ADI-R RBB")) %>%
+                           ADI_RRB_TOTAL_C ~ "ADI-R RRB")) %>%
   modify_header(all_stat_cols() ~  "**{level}**") %>% 
   bold_labels()
 
@@ -176,7 +176,7 @@ adir_18_24 <- df18_24 %>%
               missing_text = "Missing",
               label = list(ADI_R_SOCIAL_TOTAL_A ~ "ADI-R Social",
                            ADI_R_VERBAL_TOTAL_BV ~ "ADI-R Verbal",
-                           ADI_RRB_TOTAL_C ~ "ADI-R RBB")) %>%
+                           ADI_RRB_TOTAL_C ~ "ADI-R RRB")) %>%
   modify_header(all_stat_cols() ~  "**{level}**") %>% 
   bold_labels()
 
