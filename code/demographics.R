@@ -39,14 +39,16 @@ age_by_groups <- df %>%
               statistic = list(AGE ~ c("{mean} ({sd})", "{median}")),
               type = list(AGE ~ 'continuous2'),
               label = AGE ~ "Age") %>%
-  modify_header(all_stat_cols() ~  "**{level}**<br>N = {n}")
-gt::gtsave(as_gt(age_by_groups), filename = "./results/Age_by_groups.png")
+  modify_header(all_stat_cols() ~  "**{level}**") %>% as_gt() %>% 
+  gt::tab_options(table.font.names = "Times New Roman")
+gt::gtsave(age_by_groups, filename = "./results/Age_by_groups.png")
 
 ## Histogram plot for AGE by GROUPS (SEX and DIAGNOSIS)
 # Whole sample
 histog <- ggplot(df, aes(x = AGE)) +
   geom_histogram(fill = "white", colour = "black") +
-  facet_grid(df$SEX ~ df$DX_GROUP)
+  facet_grid(df$SEX ~ df$DX_GROUP) +
+  xlab("Age")
 histog
 ggsave("./results/histogram_age.png")
 
@@ -55,7 +57,8 @@ df6_10 <- subset(df, AGE<11) #faixa etaria
 attach(df6_10)
 histog_6to10 <- ggplot(df6_10, aes(x = df6_10$AGE)) +
   geom_histogram(fill = "white", colour = "black") +
-  facet_grid(df6_10$SEX ~ df6_10$DX_GROUP)
+  facet_grid(df6_10$SEX ~ df6_10$DX_GROUP) +
+  xlab("Age")
 histog_6to10
 ggsave("./results/histogram_age_6to10.png")
 
@@ -81,7 +84,7 @@ tvolume_6_10 <- tbl_summary(df6_10, by = GROUP.A,
                             type = list(all_continuous() ~ 'continuous2'),
                             label = TOTAL_VOLUME ~ "6 to 10 years old",
                             include = TOTAL_VOLUME) %>% bold_labels() %>%
-  modify_header(all_stat_cols() ~  "**{level}**<br>N = {n}")
+  modify_header(all_stat_cols() ~  "**{level}**")
 tvolume_6_10
 
 
@@ -90,7 +93,8 @@ df11_14 <- subset(df, AGE>=11 & AGE<15) #faixa etaria
 attach(df11_14)
 histog_11to14 <- ggplot(df11_14, aes(x = df11_14$AGE)) +
   geom_histogram(fill = "white", colour = "black") +
-  facet_grid(df11_14$SEX ~ df11_14$DX_GROUP)
+  facet_grid(df11_14$SEX ~ df11_14$DX_GROUP) +
+  xlab("Age")
 histog_11to14
 ggsave("./results/histogram_age_11to14.png")
 
@@ -117,14 +121,15 @@ tvolume_11_14 <- tbl_summary(df11_14, by = GROUP.A,
                              type = list(all_continuous() ~ 'continuous2'),
                              label = TOTAL_VOLUME ~ "11 to 14 years old",
                              include = TOTAL_VOLUME) %>% bold_labels() %>%
-  modify_header(all_stat_cols() ~  "**{level}**<br>N = {n}")
+  modify_header(all_stat_cols() ~  "**{level}**")
 
 # 15 to 17 years old
 df15_17 <- subset(df, AGE>=15 & AGE<18) #faixa etaria
 attach(df15_17)
 histog_15to17 <- ggplot(df15_17, aes(x = df15_17$AGE)) +
   geom_histogram(fill = "white", colour = "black") +
-  facet_grid(df15_17$SEX ~ df15_17$DX_GROUP)
+  facet_grid(df15_17$SEX ~ df15_17$DX_GROUP) +
+  xlab("Age")
 histog_15to17
 ggsave("./results/histogram_age_15to17.png")
 
@@ -151,14 +156,15 @@ tvolume_15_17 <- tbl_summary(df15_17, by = GROUP.A,
                              type = list(all_continuous() ~ 'continuous2'),
                              label = TOTAL_VOLUME ~ "15 to 17 years old",
                              include = TOTAL_VOLUME) %>% bold_labels() %>%
-  modify_header(all_stat_cols() ~  "**{level}**<br>N = {n}")
+  modify_header(all_stat_cols() ~  "**{level}**")
 
 # 18 to 24 years old
 df18_24 <- subset(df, AGE>=18)
 attach(df18_24)
 histog_18to24 <- ggplot(df18_24, aes(x = df18_24$AGE)) +
   geom_histogram(fill = "white", colour = "black") +
-  facet_grid(df18_24$SEX ~ df18_24$DX_GROUP)
+  facet_grid(df18_24$SEX ~ df18_24$DX_GROUP) +
+  xlab("Age")
 histog_18to24
 ggsave("./results/histogram_age_18to24.png")
 
@@ -185,120 +191,16 @@ tvolume_18_24 <- tbl_summary(df18_24, by = GROUP.A,
                              type = list(all_continuous() ~ 'continuous2'),
                              label = TOTAL_VOLUME ~ "18 to 24 years old",
                              include = TOTAL_VOLUME) %>% bold_labels() %>%
-  modify_header(all_stat_cols() ~  "**{level}**<br>N = {n}")
+  modify_header(all_stat_cols() ~  "**{level}**")
 
-gt::gtsave(as_gt(gtsummary::tbl_merge(list(n_6_10, n_11_14, n_15_17, n_18_24),
-                                      tab_spanner = c("6 to 10", "11 to 14", "15 to 17", "18 to 24"))),
+gt::gtsave(gtsummary::tbl_merge(list(n_6_10, n_11_14, n_15_17, n_18_24),
+                                      tab_spanner = c("**6 to 10**", "**11 to 14**", "**15 to 17**", "**18 to 24**")) %>% as_gt() %>% 
+                   gt::tab_options(table.font.names = "Times New Roman"),
            filename = "./results/n_agegroups.png")
-gt::gtsave(as_gt(gtsummary::tbl_merge(list(adir_6_10, adir_11_14, adir_15_17, adir_18_24),
-                                      tab_spanner = c("**6 to 10**", "**11 to 14**", "**15 to 17**", "**18 to 24**"))),
+gt::gtsave(gtsummary::tbl_merge(list(adir_6_10, adir_11_14, adir_15_17, adir_18_24),
+                                      tab_spanner = c("**6 to 10**", "**11 to 14**", "**15 to 17**", "**18 to 24**")) %>% as_gt() %>%
+                   gt::tab_options(table.font.names = "Times New Roman"),
            filename = "./results/adir_groups.png")
-gt::gtsave(as_gt(gtsummary::tbl_stack(list(tvolume_6_10, tvolume_11_14, tvolume_15_17, tvolume_18_24))),
+gt::gtsave(gtsummary::tbl_stack(list(tvolume_6_10, tvolume_11_14, tvolume_15_17, tvolume_18_24)) %>% as_gt() %>% 
+                   gt::tab_options(table.font.names = "Times New Roman"),
            filename = "./results/tvolume_groups.png")
-
-### DEMOGRAPHICS FOR AGE GROUPS
-# Same tables and plots
-
-# 6 TO 10 YEARS OLD
-#Defining age range
-df <- subset(df, AGE>=6 & AGE<11)
-attach(df)
-
-# Summary tables
-summary(AGE)
-summ_geral <- df %>% #tabela sumário da faixa etária
-  summarise(across(AGE, list(median = median, mean = mean, sd = sd, n = length)))
-summ_geral
-summ_groups <- df %>% group_by(SEX, DX_GROUP) %>% #tabela sumário da faixa etária por grupo
-  summarise(across(AGE, list(median = median, mean = mean, sd = sd, n = length)))
-summ_groups
-summ_sex <- df %>% group_by(SEX) %>% #tabela sumário da faixa etária por gênero
-  summarise(across(AGE, list(median = median, mean = mean, sd = sd, n = length)))
-summ_sex
-summ_dx <- df %>% group_by(DX_GROUP) %>% #tabela sumário da faixa etária por diag
-  summarise(across(AGE, list(median = median, mean = mean, sd = sd, n = length)))
-summ_dx
-
-write.table(format(as.data.frame(summ_geral),digits = 4), "6a10.csv", sep = ",", quote = F, row.names = F)
-write.table(format(as.data.frame(summ_groups),digits = 4), "6a10grupos.csv", sep = ",", quote = F, row.names = F)
-write.table(format(as.data.frame(summ_sex),digits = 4), "6a10sex.csv", sep = ",", quote = F, row.names = F)
-write.table(format(as.data.frame(summ_dx),digits = 4), "6a10dx.csv", sep = ",", quote = F, row.names = F)
-
-
-
-#11 TO 14 YEARS OLD
-# Defining age range
-load("./data/df.RData")
-df <- subset(df, AGE>=11 & AGE<15)
-attach(df)
-
-summary(AGE)
-summ_geral <- df %>% #tabela sumário da faixa etária
-  summarise(across(AGE, list(median = median, mean = mean, sd = sd, n = length)))
-summ_geral
-summ_groups <- df %>% group_by(SEX, DX_GROUP) %>% #tabela sumário da faixa etária por grupo
-  summarise(across(AGE, list(median = median, mean = mean, sd = sd, n = length)))
-summ_groups
-summ_sex <- df %>% group_by(SEX) %>% #tabela sumário da faixa etária por gênero
-  summarise(across(AGE, list(median = median, mean = mean, sd = sd, n = length)))
-summ_sex
-summ_dx <- df %>% group_by(DX_GROUP) %>% #tabela sumário da faixa etária por diag
-  summarise(across(AGE, list(median = median, mean = mean, sd = sd, n = length)))
-summ_dx
-
-write.table(format(as.data.frame(summ_geral),digits = 4), "11a14.csv", sep = ",", quote = F, row.names = F)
-write.table(format(as.data.frame(summ_groups),digits = 4), "11a14grupos.csv", sep = ",", quote = F, row.names = F)
-write.table(format(as.data.frame(summ_sex),digits = 4), "11a14sex.csv", sep = ",", quote = F, row.names = F)
-write.table(format(as.data.frame(summ_dx),digits = 4), "11a14dx.csv", sep = ",", quote = F, row.names = F)
-
-
-#15 TO 17 YEARS OLD
-# Defining age range
-load("./data/df.RData")
-df <- subset(df, AGE>=15 & AGE<18)
-attach(df)
-
-summary(AGE)
-summ_geral <- df %>% #tabela sumário da faixa etária
-  summarise(across(AGE, list(median = median, mean = mean, sd = sd, n = length)))
-summ_geral
-summ_groups <- df %>% group_by(SEX, DX_GROUP) %>% #tabela sumário da faixa etária por grupo
-  summarise(across(AGE, list(median = median, mean = mean, sd = sd, n = length)))
-summ_groups
-summ_sex <- df %>% group_by(SEX) %>% #tabela sumário da faixa etária por gênero
-  summarise(across(AGE, list(median = median, mean = mean, sd = sd, n = length)))
-summ_sex
-summ_dx <- df %>% group_by(DX_GROUP) %>% #tabela sumário da faixa etária por diag
-  summarise(across(AGE, list(median = median, mean = mean, sd = sd, n = length)))
-summ_dx
-
-write.table(format(as.data.frame(summ_geral),digits = 4), "15a17.csv", sep = ",", quote = F, row.names = F)
-write.table(format(as.data.frame(summ_groups),digits = 4), "15a17grupos.csv", sep = ",", quote = F, row.names = F)
-write.table(format(as.data.frame(summ_sex),digits = 4), "15a17sex.csv", sep = ",", quote = F, row.names = F)
-write.table(format(as.data.frame(summ_dx),digits = 4), "15a17dx.csv", sep = ",", quote = F, row.names = F)
-
-
-#18 TO 24 YEARS OLD
-# Defining age range
-load("./data/df.RData")
-df <- subset(df, AGE>=18)
-attach(df)
-
-summary(AGE)
-summ_geral <- df %>% #tabela sumário da faixa etária
-  summarise(across(AGE, list(median = median, mean = mean, sd = sd, n = length)))
-summ_geral
-summ_groups <- df %>% group_by(SEX, DX_GROUP) %>% #tabela sumário da faixa etária por grupo
-  summarise(across(AGE, list(median = median, mean = mean, sd = sd, n = length)))
-summ_groups
-summ_sex <- df %>% group_by(SEX) %>% #tabela sumário da faixa etária por gênero
-  summarise(across(AGE, list(median = median, mean = mean, sd = sd, n = length)))
-summ_sex
-summ_dx <- df %>% group_by(DX_GROUP) %>% #tabela sumário da faixa etária por diag
-  summarise(across(AGE, list(median = median, mean = mean, sd = sd, n = length)))
-summ_dx
-
-write.table(format(as.data.frame(summ_geral),digits = 4), "18a24.csv", sep = ",", quote = F, row.names = F)
-write.table(format(as.data.frame(summ_groups),digits = 4), "18a24grupos.csv", sep = ",", quote = F, row.names = F)
-write.table(format(as.data.frame(summ_sex),digits = 4), "18a24sex.csv", sep = ",", quote = F, row.names = F)
-write.table(format(as.data.frame(summ_dx),digits = 4), "18a24dx.csv", sep = ",", quote = F, row.names = F)
