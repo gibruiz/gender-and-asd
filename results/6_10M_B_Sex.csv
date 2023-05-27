@@ -1,63 +1,63 @@
 ROI name,Estimate,Std. Error,t value,p-value (FDR corrected)
-Left caudal anterior cingulate, 0.0342860,NA,NA,NA
-Left caudal middle frontal,-0.0102538,NA,NA,NA
-Left cuneus,-0.0091309,NA,NA,NA
-Left entorhinal,-0.0036538,NA,NA,NA
-Left fusiform,-0.0413250,NA,NA,NA
-Left inferior parietal,-0.1101848,NA,NA,NA
-Left inferior temporal,-0.0822866,NA,NA,NA
-Left isthmus cingulate, 0.0223155,NA,NA,NA
-Left lateral occipital,-0.0879497,NA,NA,NA
-Left lateral orbitofrontal, 0.0164397,NA,NA,NA
-Left lingual, 0.0334515,NA,NA,NA
-Left medial orbitofrontal,-0.0469458,NA,NA,NA
-Left middle temporal,-0.1066871,NA,NA,NA
-Left parahippocampal, 0.0264367,NA,NA,NA
-Left paracentral, 0.1021003,NA,NA,NA
-Left pars opercularis, 0.0201334,NA,NA,NA
-Left pars orbitalis, 0.0314347,NA,NA,NA
-Left pars triangularis,-0.0300310,NA,NA,NA
-Left pericalcarine,-0.0141143,NA,NA,NA
-Left postcentral, 0.0166318,NA,NA,NA
-Left posterior cingulate,-0.0280004,NA,NA,NA
-Left precentral, 0.0732342,NA,NA,NA
-Left precuneus, 0.0037898,NA,NA,NA
-Left rostral anterior cingulate, 0.0064243,NA,NA,NA
-Left rostral middle frontal,-0.0521939,NA,NA,NA
-Left superior frontal, 0.0049239,NA,NA,NA
-Left superior parietal, 0.0048039,NA,NA,NA
-Left superior temporal,-0.0466246,NA,NA,NA
-Left supramarginal,-0.0352543,NA,NA,NA
-Left transverse temporal,-0.0027838,NA,NA,NA
-Left insula, 0.0299624,NA,NA,NA
-Right caudal anterior cingulate, 0.0356301,NA,NA,NA
-Right caudal middle frontal, 0.0388055,NA,NA,NA
-Right cuneus,-0.0085775,NA,NA,NA
-Right entorhinal,-0.0202633,NA,NA,NA
-Right fusiform,-0.0511942,NA,NA,NA
-Right inferior parietal,-0.1277876,NA,NA,NA
-Right inferior temporal,-0.0947860,NA,NA,NA
-Right isthmus cingulate,-0.0048603,NA,NA,NA
-Right lateral occipital,-0.0645194,NA,NA,NA
-Right lateral orbitofrontal, 0.0206317,NA,NA,NA
-Right lingual, 0.0354408,NA,NA,NA
-Right medial orbitofrontal,-0.0272066,NA,NA,NA
-Right middle temporal,-0.1115739,NA,NA,NA
-Right parahippocampal, 0.0190229,NA,NA,NA
-Right paracentral, 0.1310494,NA,NA,NA
-Right pars opercularis, 0.0213403,NA,NA,NA
-Right pars orbitalis, 0.0354278,NA,NA,NA
-Right pars triangularis, 0.0385559,NA,NA,NA
-Right pericalcarine,-0.0147748,NA,NA,NA
-Right postcentral, 0.0243058,NA,NA,NA
-Right posterior cingulate, 0.0330491,NA,NA,NA
-Right precentral, 0.0745664,NA,NA,NA
-Right precuneus,-0.0528889,NA,NA,NA
-Right rostral anterior cingulate, 0.0227032,NA,NA,NA
-Right rostral middle frontal,-0.0294790,NA,NA,NA
-Right superior frontal, 0.0224784,NA,NA,NA
-Right superior parietal, 0.0041188,NA,NA,NA
-Right superior temporal,-0.0656878,NA,NA,NA
-Right supramarginal,-0.0233114,NA,NA,NA
-Right transverse temporal,-0.0266438,NA,NA,NA
-Right insula, 0.0279954,NA,NA,NA
+Left caudal anterior cingulate, 0.18897921,NA,NA,NA
+Left caudal middle frontal, 0.08689513,NA,NA,NA
+Left cuneus, 0.08084758,NA,NA,NA
+Left entorhinal, 0.08186160,NA,NA,NA
+Left fusiform, 0.01717299,NA,NA,NA
+Left inferior parietal,-0.16230233,NA,NA,NA
+Left inferior temporal,-0.04625979,NA,NA,NA
+Left isthmus cingulate, 0.23984645,NA,NA,NA
+Left lateral occipital, 0.00306332,NA,NA,NA
+Left lateral orbitofrontal, 0.08515138,NA,NA,NA
+Left lingual, 0.05358454,NA,NA,NA
+Left medial orbitofrontal, 0.03212334,NA,NA,NA
+Left middle temporal,-0.17094710,NA,NA,NA
+Left parahippocampal, 0.16744870,NA,NA,NA
+Left paracentral, 0.39254764,NA,NA,NA
+Left pars opercularis, 0.00544917,NA,NA,NA
+Left pars orbitalis, 0.02803066,NA,NA,NA
+Left pars triangularis,-0.08697173,NA,NA,NA
+Left pericalcarine, 0.06957978,NA,NA,NA
+Left postcentral, 0.01736512,NA,NA,NA
+Left posterior cingulate, 0.11940330,NA,NA,NA
+Left precentral, 0.17213241,NA,NA,NA
+Left precuneus, 0.14697955,NA,NA,NA
+Left rostral anterior cingulate, 0.15816644,NA,NA,NA
+Left rostral middle frontal,-0.00028232,NA,NA,NA
+Left superior frontal, 0.11329227,NA,NA,NA
+Left superior parietal, 0.09529563,NA,NA,NA
+Left superior temporal, 0.00622490,NA,NA,NA
+Left supramarginal,-0.04585239,NA,NA,NA
+Left transverse temporal, 0.15303093,NA,NA,NA
+Left insula, 0.15567177,NA,NA,NA
+Right caudal anterior cingulate, 0.13115814,NA,NA,NA
+Right caudal middle frontal, 0.17689620,NA,NA,NA
+Right cuneus, 0.07662527,NA,NA,NA
+Right entorhinal, 0.04609127,NA,NA,NA
+Right fusiform,-0.05965300,NA,NA,NA
+Right inferior parietal,-0.21597000,NA,NA,NA
+Right inferior temporal,-0.13317266,NA,NA,NA
+Right isthmus cingulate, 0.19896632,NA,NA,NA
+Right lateral occipital,-0.07003265,NA,NA,NA
+Right lateral orbitofrontal, 0.09385994,NA,NA,NA
+Right lingual, 0.07518749,NA,NA,NA
+Right medial orbitofrontal, 0.04371726,NA,NA,NA
+Right middle temporal,-0.12636893,NA,NA,NA
+Right parahippocampal, 0.06871172,NA,NA,NA
+Right paracentral, 0.34096947,NA,NA,NA
+Right pars opercularis, 0.03922442,NA,NA,NA
+Right pars orbitalis, 0.04195384,NA,NA,NA
+Right pars triangularis, 0.01593168,NA,NA,NA
+Right pericalcarine, 0.14118463,NA,NA,NA
+Right postcentral, 0.11049831,NA,NA,NA
+Right posterior cingulate, 0.09093509,NA,NA,NA
+Right precentral, 0.18428969,NA,NA,NA
+Right precuneus, 0.04802145,NA,NA,NA
+Right rostral anterior cingulate, 0.08404060,NA,NA,NA
+Right rostral middle frontal, 0.00903146,NA,NA,NA
+Right superior frontal, 0.13626860,NA,NA,NA
+Right superior parietal, 0.12926810,NA,NA,NA
+Right superior temporal,-0.05059410,NA,NA,NA
+Right supramarginal,-0.01136513,NA,NA,NA
+Right transverse temporal, 0.13072266,NA,NA,NA
+Right insula, 0.15045449,NA,NA,NA

@@ -33,8 +33,8 @@ roi_names <- c("Left caudal anterior cingulate", "Left caudal middle frontal",
 
 ### AGE RANGE 1 -> 6 to 10 yo ###
 # Defines age range
-df1 <- subset(df, AGE<11)
-attach(df1)
+df6_10 <- subset(df, AGE<11)
+attach(df6_10)
 
 # Defines blank array for model results
 results_m1_1 <- array(0,c(62,4))
@@ -46,11 +46,11 @@ results_m5_1 <- array(0,c(62,4))
 # Linear model for each ROI including combinations of the covariates
 # Completes blank table with coefficients from linear model
 for (i in 1:62){
-  m1_1 <-lm(DX_GROUP ~ df[,i+32], data=df)
-  m2_1 <-lm(DX_GROUP ~ df[,i+32] * SEX, data=df)
-  m3_1 <-lm(DX_GROUP ~ df[,i+32] * SEX + SITE_ID, data=df)
-  m4_1 <-lm(DX_GROUP ~ df[,i+32] * SEX + TOTAL_VOLUME, data=df)
-  m5_1 <-lm(DX_GROUP ~ df[,i+32] * SEX + SITE_ID + TOTAL_VOLUME, data=df)
+  m1_1 <-lm(DX_GROUP ~ df6_10[,i+32], data=df6_10)
+  m2_1 <-lm(DX_GROUP ~ df6_10[,i+32] * SEX, data=df6_10)
+  m3_1 <-lm(DX_GROUP ~ df6_10[,i+32] * SEX + SITE_ID, data=df6_10)
+  m4_1 <-lm(DX_GROUP ~ df6_10[,i+32] * SEX + TOTAL_VOLUME, data=df6_10)
+  m5_1 <-lm(DX_GROUP ~ df6_10[,i+32] * SEX + SITE_ID + TOTAL_VOLUME, data=df6_10)
   
   results_m1_1[i,] <-summary(m1_1)$coefficient[2,1:4]
   results_m2_1[i,] <-summary(m2_1)$coefficient[2,1:4]
@@ -96,11 +96,11 @@ results_m5_2 <- array(0,c(62,4))
 # Linear model for each ROI including combinations of the covariates
 # Completes blank table with coefficients from linear model
 for (i in 1:62){
-  m1_2 <-lm(DX_GROUP ~ df[,i+32], data=df)
-  m2_2 <-lm(DX_GROUP ~ df[,i+32] * SEX, data=df)
-  m3_2 <-lm(DX_GROUP ~ df[,i+32] * SEX + SITE_ID, data=df)
-  m4_2 <-lm(DX_GROUP ~ df[,i+32] * SEX + TOTAL_VOLUME, data=df)
-  m5_2 <-lm(DX_GROUP ~ df[,i+32] * SEX + SITE_ID + TOTAL_VOLUME, data=df)
+  m1_2 <-lm(DX_GROUP ~ df11_14[,i+32], data=df11_14)
+  m2_2 <-lm(DX_GROUP ~ df11_14[,i+32] * SEX, data=df11_14)
+  m3_2 <-lm(DX_GROUP ~ df11_14[,i+32] * SEX + SITE_ID, data=df11_14)
+  m4_2 <-lm(DX_GROUP ~ df11_14[,i+32] * SEX + TOTAL_VOLUME, data=df11_14)
+  m5_2 <-lm(DX_GROUP ~ df11_14[,i+32] * SEX + SITE_ID + TOTAL_VOLUME, data=df11_14)
   
   results_m1_2[i,] <-summary(m1_2)$coefficient[2,1:4]
   results_m2_2[i,] <-summary(m2_2)$coefficient[2,1:4]
@@ -146,11 +146,11 @@ results_m5_3 <- array(0,c(62,4))
 # Linear model for each ROI including combinations of the covariates
 # Completes blank table with coefficients from linear model
 for (i in 1:62){
-  m1_3 <-lm(DX_GROUP ~ df[,i+32], data=df)
-  m2_3 <-lm(DX_GROUP ~ df[,i+32] * SEX, data=df)
-  m3_3 <-lm(DX_GROUP ~ df[,i+32] * SEX + SITE_ID, data=df)
-  m4_3 <-lm(DX_GROUP ~ df[,i+32] * SEX + TOTAL_VOLUME, data=df)
-  m5_3 <-lm(DX_GROUP ~ df[,i+32] * SEX + SITE_ID + TOTAL_VOLUME, data=df)
+  m1_3 <-lm(DX_GROUP ~ df15_17[,i+32], data=df15_17)
+  m2_3 <-lm(DX_GROUP ~ df15_17[,i+32] * SEX, data=df15_17)
+  m3_3 <-lm(DX_GROUP ~ df15_17[,i+32] * SEX + SITE_ID, data=df15_17)
+  m4_3 <-lm(DX_GROUP ~ df15_17[,i+32] * SEX + TOTAL_VOLUME, data=df15_17)
+  m5_3 <-lm(DX_GROUP ~ df15_17[,i+32] * SEX + SITE_ID + TOTAL_VOLUME, data=df15_17)
   
   results_m1_3[i,] <-summary(m1_3)$coefficient[2,1:4]
   results_m2_3[i,] <-summary(m2_3)$coefficient[2,1:4]
@@ -196,11 +196,11 @@ results_m5_4 <- array(0,c(62,4))
 # Linear model for each ROI including combinations of the covariates
 # Completes blank table with coefficients from linear model
 for (i in 1:62){
-  m1_4 <-lm(DX_GROUP ~ df[,i+32], data=df)
-  m2_4 <-lm(DX_GROUP ~ df[,i+32] * SEX, data=df)
-  m3_4 <-lm(DX_GROUP ~ df[,i+32] * SEX + SITE_ID, data=df)
-  m4_4 <-lm(DX_GROUP ~ df[,i+32] * SEX + TOTAL_VOLUME, data=df)
-  m5_4 <-lm(DX_GROUP ~ df[,i+32] * SEX + SITE_ID + TOTAL_VOLUME, data=df)
+  m1_4 <-lm(DX_GROUP ~ df18_24[,i+32], data=df18_24)
+  m2_4 <-lm(DX_GROUP ~ df18_24[,i+32] * SEX, data=df18_24)
+  m3_4 <-lm(DX_GROUP ~ df18_24[,i+32] * SEX + SITE_ID, data=df18_24)
+  m4_4 <-lm(DX_GROUP ~ df18_24[,i+32] * SEX + TOTAL_VOLUME, data=df18_24)
+  m5_4 <-lm(DX_GROUP ~ df18_24[,i+32] * SEX + SITE_ID + TOTAL_VOLUME, data=df18_24)
   
   results_m1_4[i,] <-summary(m1_4)$coefficient[2,1:4]
   results_m2_4[i,] <-summary(m2_4)$coefficient[2,1:4]
