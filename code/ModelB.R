@@ -46,11 +46,11 @@ results_m5_1 <- array(0,c(62,4))
 # Linear model for each ROI including combinations of the covariates
 # Completes blank table with coefficients from linear model
 for (i in 1:62){
-  m1_1 <-lm(DX_GROUP ~ df6_10[,i+32], data=df6_10)
-  m2_1 <-lm(DX_GROUP ~ df6_10[,i+32] * SEX, data=df6_10)
-  m3_1 <-lm(DX_GROUP ~ df6_10[,i+32] * SEX + SITE_ID, data=df6_10)
-  m4_1 <-lm(DX_GROUP ~ df6_10[,i+32] * SEX + TOTAL_VOLUME, data=df6_10)
-  m5_1 <-lm(DX_GROUP ~ df6_10[,i+32] * SEX + SITE_ID + TOTAL_VOLUME, data=df6_10)
+  m1_1 <-glm(DX_GROUP ~ df6_10[,i+32], family = binomial(logit), data=df6_10)
+  m2_1 <-glm(DX_GROUP ~ df6_10[,i+32] * SEX, family = binomial(logit), data=df6_10)
+  m3_1 <-glm(DX_GROUP ~ df6_10[,i+32] * SEX + SITE_ID, family = binomial(logit), data=df6_10)
+  m4_1 <-glm(DX_GROUP ~ df6_10[,i+32] * SEX + TOTAL_VOLUME, family = binomial(logit), data=df6_10)
+  m5_1 <-glm(DX_GROUP ~ df6_10[,i+32] * SEX + SITE_ID + TOTAL_VOLUME, family = binomial(logit), data=df6_10)
   
   results_m1_1[i,] <-summary(m1_1)$coefficient[2,1:4]
   results_m2_1[i,] <-summary(m2_1)$coefficient[2,1:4]
@@ -103,11 +103,11 @@ results_m5_2 <- array(0,c(62,4))
 # Linear model for each ROI including combinations of the covariates
 # Completes blank table with coefficients from linear model
 for (i in 1:62){
-  m1_2 <-lm(DX_GROUP ~ df11_14[,i+32], data=df11_14)
-  m2_2 <-lm(DX_GROUP ~ df11_14[,i+32] * SEX, data=df11_14)
-  m3_2 <-lm(DX_GROUP ~ df11_14[,i+32] * SEX + SITE_ID, data=df11_14)
-  m4_2 <-lm(DX_GROUP ~ df11_14[,i+32] * SEX + TOTAL_VOLUME, data=df11_14)
-  m5_2 <-lm(DX_GROUP ~ df11_14[,i+32] * SEX + SITE_ID + TOTAL_VOLUME, data=df11_14)
+  m1_2 <-glm(DX_GROUP ~ df11_14[,i+32], family = binomial(logit), data=df11_14)
+  m2_2 <-glm(DX_GROUP ~ df11_14[,i+32] * SEX, family = binomial(logit), data=df11_14)
+  m3_2 <-glm(DX_GROUP ~ df11_14[,i+32] * SEX + SITE_ID, family = binomial(logit), data=df11_14)
+  m4_2 <-glm(DX_GROUP ~ df11_14[,i+32] * SEX + TOTAL_VOLUME, family = binomial(logit), data=df11_14)
+  m5_2 <-glm(DX_GROUP ~ df11_14[,i+32] * SEX + SITE_ID + TOTAL_VOLUME, family = binomial(logit), data=df11_14)
   
   results_m1_2[i,] <-summary(m1_2)$coefficient[2,1:4]
   results_m2_2[i,] <-summary(m2_2)$coefficient[2,1:4]
@@ -160,11 +160,11 @@ results_m5_3 <- array(0,c(62,4))
 # Linear model for each ROI including combinations of the covariates
 # Completes blank table with coefficients from linear model
 for (i in 1:62){
-  m1_3 <-lm(DX_GROUP ~ df15_17[,i+32], data=df15_17)
-  m2_3 <-lm(DX_GROUP ~ df15_17[,i+32] * SEX, data=df15_17)
-  m3_3 <-lm(DX_GROUP ~ df15_17[,i+32] * SEX + SITE_ID, data=df15_17)
-  m4_3 <-lm(DX_GROUP ~ df15_17[,i+32] * SEX + TOTAL_VOLUME, data=df15_17)
-  m5_3 <-lm(DX_GROUP ~ df15_17[,i+32] * SEX + SITE_ID + TOTAL_VOLUME, data=df15_17)
+  m1_3 <-glm(DX_GROUP ~ df15_17[,i+32], family = binomial(logit), data=df15_17)
+  m2_3 <-glm(DX_GROUP ~ df15_17[,i+32] * SEX, family = binomial(logit), data=df15_17)
+  m3_3 <-glm(DX_GROUP ~ df15_17[,i+32] * SEX + SITE_ID, family = binomial(logit), data=df15_17)
+  m4_3 <-glm(DX_GROUP ~ df15_17[,i+32] * SEX + TOTAL_VOLUME, family = binomial(logit), data=df15_17)
+  m5_3 <-glm(DX_GROUP ~ df15_17[,i+32] * SEX + SITE_ID + TOTAL_VOLUME, family = binomial(logit), data=df15_17)
   
   results_m1_3[i,] <-summary(m1_3)$coefficient[2,1:4]
   results_m2_3[i,] <-summary(m2_3)$coefficient[2,1:4]
@@ -217,11 +217,11 @@ results_m5_4 <- array(0,c(62,4))
 # Linear model for each ROI including combinations of the covariates
 # Completes blank table with coefficients from linear model
 for (i in 1:62){
-  m1_4 <-lm(DX_GROUP ~ df18_24[,i+32], data=df18_24)
-  m2_4 <-lm(DX_GROUP ~ df18_24[,i+32] * SEX, data=df18_24)
-  m3_4 <-lm(DX_GROUP ~ df18_24[,i+32] * SEX + SITE_ID, data=df18_24)
-  m4_4 <-lm(DX_GROUP ~ df18_24[,i+32] * SEX + TOTAL_VOLUME, data=df18_24)
-  m5_4 <-lm(DX_GROUP ~ df18_24[,i+32] * SEX + SITE_ID + TOTAL_VOLUME, data=df18_24)
+  m1_4 <-glm(DX_GROUP ~ df18_24[,i+32], family = binomial(logit), data=df18_24)
+  m2_4 <-glm(DX_GROUP ~ df18_24[,i+32] * SEX, family = binomial(logit), data=df18_24)
+  m3_4 <-glm(DX_GROUP ~ df18_24[,i+32] * SEX + SITE_ID, family = binomial(logit), data=df18_24)
+  m4_4 <-glm(DX_GROUP ~ df18_24[,i+32] * SEX + TOTAL_VOLUME, family = binomial(logit), data=df18_24)
+  m5_4 <-glm(DX_GROUP ~ df18_24[,i+32] * SEX + SITE_ID + TOTAL_VOLUME, family = binomial(logit), data=df18_24)
   
   results_m1_4[i,] <-summary(m1_4)$coefficient[2,1:4]
   results_m2_4[i,] <-summary(m2_4)$coefficient[2,1:4]

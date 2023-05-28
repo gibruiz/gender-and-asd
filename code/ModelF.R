@@ -68,25 +68,25 @@ for (i in 1:62){
   try(m_1.X <- MASS::polr(GROUP.A ~ df6_10[,i+32] + SITE_ID, data=df6_10, Hess = T))
   try(m_1.Y <- MASS::polr(GROUP.B ~ df6_10[,i+32] + SITE_ID, data=df6_10, Hess = T))
   try(m_1.Z <- MASS::polr(GROUP.C ~ df6_10[,i+32] + SITE_ID, data=df6_10, Hess = T))
-  try(pr_odds1[i,1]  <- brant(m_1.X)[1,3])
-  try(pr_odds1[i,2]  <- brant(m_1.Y)[1,3])
-  try(pr_odds1[i,3]  <- brant(m_1.Z)[1,3])
-  deviance1[i,]      <- c(summary(m_1.X)$deviance, summary(m_1.Y)$deviance, summary(m_1.Z)$deviance)
-  results_m_X1[[i]]  <- gtsummary::tbl_regression(m_1.X, exponentiate = T
-                                                 , estimate_fun = purrr::partial(style_ratio, digits = 3)
-                                                 , include = !SITE_ID
-                                                 ) %>% gtsummary::add_global_p() %>%
-    gtsummary::add_significance_stars(hide_p = F, hide_se = T, hide_ci = F, pattern = "{p.value}{stars}")
-  results_m_Y1[[i]]  <- gtsummary::tbl_regression(m_1.Y, exponentiate = T
-                                                 , estimate_fun = purrr::partial(style_ratio, digits = 3)
-                                                 , include = !SITE_ID
-                                                 ) %>% gtsummary::add_global_p() %>%
-    gtsummary::add_significance_stars(hide_p = F, hide_se = T, hide_ci = F, pattern = "{p.value}{stars}")
-  results_m_Z1[[i]]  <- gtsummary::tbl_regression(m_1.Z, exponentiate = T
-                                                 , estimate_fun = purrr::partial(style_ratio, digits = 3)
-                                                 , include = !SITE_ID
-                                                 ) %>% gtsummary::add_global_p() %>%
-    gtsummary::add_significance_stars(hide_p = F, hide_se = T, hide_ci = F, pattern = "{p.value}{stars}")
+  # try(pr_odds1[i,1]  <- brant(m_1.X)[1,3])
+  # try(pr_odds1[i,2]  <- brant(m_1.Y)[1,3])
+  # try(pr_odds1[i,3]  <- brant(m_1.Z)[1,3])
+  # deviance1[i,]      <- c(summary(m_1.X)$deviance, summary(m_1.Y)$deviance, summary(m_1.Z)$deviance)
+  # results_m_X1[[i]]  <- gtsummary::tbl_regression(m_1.X, exponentiate = T
+  #                                                , estimate_fun = purrr::partial(style_ratio, digits = 3)
+  #                                                , include = !SITE_ID
+  #                                                ) %>% gtsummary::add_global_p() %>%
+  #   gtsummary::add_significance_stars(hide_p = F, hide_se = T, hide_ci = F, pattern = "{p.value}{stars}")
+  # results_m_Y1[[i]]  <- gtsummary::tbl_regression(m_1.Y, exponentiate = T
+  #                                                , estimate_fun = purrr::partial(style_ratio, digits = 3)
+  #                                                , include = !SITE_ID
+  #                                                ) %>% gtsummary::add_global_p() %>%
+  #   gtsummary::add_significance_stars(hide_p = F, hide_se = T, hide_ci = F, pattern = "{p.value}{stars}")
+  # results_m_Z1[[i]]  <- gtsummary::tbl_regression(m_1.Z, exponentiate = T
+  #                                                , estimate_fun = purrr::partial(style_ratio, digits = 3)
+  #                                                , include = !SITE_ID
+  #                                                ) %>% gtsummary::add_global_p() %>%
+  #   gtsummary::add_significance_stars(hide_p = F, hide_se = T, hide_ci = F, pattern = "{p.value}{stars}")
   if(lmtest::coeftest(m_1.X)[1,4] < 0.05 | lmtest::coeftest(m_1.Y)[1,4] < 0.05 | lmtest::coeftest(m_1.Z)[1,4] < 0.05) {sig_m_1[i] <- colnames(df)[i+32]}
 }
 system("paplay /usr/share/sounds/freedesktop/stereo/complete.oga")
@@ -104,7 +104,6 @@ deviance1
 write.table(deviance1, "6_10Deviance.csv", sep = ",", row.names = F, quote = F, col.names = c("X", "Y", "Z"))
 write.table(pr_odds1, "6_10POdds.csv", sep = ",", row.names = F, quote = F, col.names = c("X", "Y", "Z"))
 sig_m_1 <- sig_m_1[!is.na(sig_m_1)]
-var_label(sig_m_1)
 sig_m_1
 
 
@@ -226,7 +225,7 @@ gt::gtsave(gt::gt(results_m_1_random) %>% gt::fmt_number(decimals = 4) %>%
 df6_10.m <- df6_10 %>%
   select(GROUP.C, sig_m_1[-c(2,3,6,9,12)])
 df6_10.m <- melt(df6_10.m, id.vars = 'GROUP.C') #redefinir pra pegar só colunas que foram sig
-levels(df6_10.m$variable) <- sig_m_1.n
+levels(df6_10.m$variable) <- sig_m_1.n[-c(2,3,6,9,12)]
 sizes <- ggplot(df6_10.m, aes(y = value)) +
   geom_boxplot(aes(x=GROUP.C, y = value))+
   scale_x_discrete(labels = c("Ctrl F", "Ctrl M", "ASD"))+
@@ -273,25 +272,25 @@ for (i in 1:62){
   try(m_2.X <- MASS::polr(GROUP.A ~ df11_14[,i+32] + SITE_ID, data=df11_14, Hess = T))
   try(m_2.Y <- MASS::polr(GROUP.B ~ df11_14[,i+32] + SITE_ID, data=df11_14, Hess = T))
   try(m_2.Z <- MASS::polr(GROUP.C ~ df11_14[,i+32] + SITE_ID, data=df11_14, Hess = T))
-  try(pr_odds2[i,1]  <- brant(m_2.X)[1,3])
-  try(pr_odds2[i,2]  <- brant(m_2.Y)[1,3])
-  try(pr_odds2[i,3]  <- brant(m_2.Z)[1,3])
-  deviance2[i,]      <- c(summary(m_2.X)$deviance, summary(m_2.Y)$deviance, summary(m_2.Z)$deviance)
-  results_m_X2[[i]]  <- gtsummary::tbl_regression(m_2.X, exponentiate = T
-                                                  , estimate_fun = purrr::partial(style_ratio, digits = 3)
-                                                  , include = !SITE_ID
-                                                  ) %>% gtsummary::add_global_p() %>%
-    gtsummary::add_significance_stars(hide_p = F, hide_se = T, hide_ci = F, pattern = "{p.value}{stars}")
-  results_m_Y2[[i]]  <- gtsummary::tbl_regression(m_2.Y, exponentiate = T
-                                                  , estimate_fun = purrr::partial(style_ratio, digits = 3)
-                                                  , include = !SITE_ID
-                                                  ) %>% gtsummary::add_global_p() %>%
-    gtsummary::add_significance_stars(hide_p = F, hide_se = T, hide_ci = F, pattern = "{p.value}{stars}")
-  results_m_Z2[[i]]  <- gtsummary::tbl_regression(m_2.Z, exponentiate = T
-                                                  , estimate_fun = purrr::partial(style_ratio, digits = 3)
-                                                  , include = !SITE_ID
-                                                  ) %>% gtsummary::add_global_p() %>%
-    gtsummary::add_significance_stars(hide_p = F, hide_se = T, hide_ci = F, pattern = "{p.value}{stars}")
+  # try(pr_odds2[i,1]  <- brant(m_2.X)[1,3])
+  # try(pr_odds2[i,2]  <- brant(m_2.Y)[1,3])
+  # try(pr_odds2[i,3]  <- brant(m_2.Z)[1,3])
+  # deviance2[i,]      <- c(summary(m_2.X)$deviance, summary(m_2.Y)$deviance, summary(m_2.Z)$deviance)
+  # results_m_X2[[i]]  <- gtsummary::tbl_regression(m_2.X, exponentiate = T
+  #                                                 , estimate_fun = purrr::partial(style_ratio, digits = 3)
+  #                                                 , include = !SITE_ID
+  #                                                 ) %>% gtsummary::add_global_p() %>%
+  #   gtsummary::add_significance_stars(hide_p = F, hide_se = T, hide_ci = F, pattern = "{p.value}{stars}")
+  # results_m_Y2[[i]]  <- gtsummary::tbl_regression(m_2.Y, exponentiate = T
+  #                                                 , estimate_fun = purrr::partial(style_ratio, digits = 3)
+  #                                                 , include = !SITE_ID
+  #                                                 ) %>% gtsummary::add_global_p() %>%
+  #   gtsummary::add_significance_stars(hide_p = F, hide_se = T, hide_ci = F, pattern = "{p.value}{stars}")
+  # results_m_Z2[[i]]  <- gtsummary::tbl_regression(m_2.Z, exponentiate = T
+  #                                                 , estimate_fun = purrr::partial(style_ratio, digits = 3)
+  #                                                 , include = !SITE_ID
+  #                                                 ) %>% gtsummary::add_global_p() %>%
+  #   gtsummary::add_significance_stars(hide_p = F, hide_se = T, hide_ci = F, pattern = "{p.value}{stars}")
   if(lmtest::coeftest(m_2.X)[1,4] < 0.05 | lmtest::coeftest(m_2.Y)[1,4] < 0.05 | lmtest::coeftest(m_2.Z)[1,4] < 0.05) {sig_m_2[i] <- colnames(df)[i+32]}
 }
 gt::gtsave(gtsummary::tbl_merge(list(tbl_stack(results_m_X2[1:31]), tbl_stack(results_m_X2[32:62])),
@@ -418,7 +417,7 @@ gt::gtsave(gt::gt(results_m_2_random) %>%  gt::fmt_number(decimals = 4) %>%
 df11_14.m <- df11_14 %>%
   select(GROUP.C, all_of(sig_m_2[c(2,4,8,11)]))
 df11_14.m <- melt(df11_14.m, id.vars = 'GROUP.C') #redefinir pra pegar só colunas que foram sig
-levels(df11_14.m$variable) <- sig_m_2.n
+levels(df11_14.m$variable) <- sig_m_2.n[c(2,4,8,11)]
 sizes <- ggplot(df11_14.m, aes(y = value)) +
   geom_boxplot(aes(x=GROUP.C, y = value))+
   scale_x_discrete(labels = c("Ctrl F", "Ctrl M", "ASD"))+
@@ -509,11 +508,11 @@ sig_m_3
 sig_m_3_random      <- rep(NA,length(sig_m_3))
 # Defining blank list for model results
 sig_m_3
-sig_m_3.n <- c(paste("Left",var_label(df15_17$Mean_1017)),paste("Left",var_label(df15_17$Mean_1022)),paste("Left",var_label(df15_17$Mean_1024)),paste("Left",var_label(df15_17$Mean_1029)),
-               paste("Left",var_label(df15_17$Mean_1031)),paste("Right",var_label(df15_17$Mean_2002)),paste("Right",var_label(df15_17$Mean_2003)),paste("Right",var_label(df15_17$Mean_2005)),
-               paste("Right",var_label(df15_17$Mean_2011)),paste("Right",var_label(df15_17$Mean_2013)),paste("Right",var_label(df15_17$Mean_2017)),paste("Right",var_label(df15_17$Mean_2021)),
-               paste("Right",var_label(df15_17$Mean_2022)),paste("Right",var_label(df15_17$Mean_2023)),paste("Right",var_label(df15_17$Mean_2024)),paste("Right",var_label(df15_17$Mean_2029)),
-               paste("Right",var_label(df15_17$Mean_2031)))
+sig_m_3.n <- c(paste("L",var_label(df15_17$Mean_1017)),paste("L",var_label(df15_17$Mean_1022)),paste("L",var_label(df15_17$Mean_1024)),paste("L",var_label(df15_17$Mean_1029)),
+               paste("L",var_label(df15_17$Mean_1031)),paste("R",var_label(df15_17$Mean_2002)),paste("R",var_label(df15_17$Mean_2003)),paste("R",var_label(df15_17$Mean_2005)),
+               paste("R",var_label(df15_17$Mean_2011)),paste("R",var_label(df15_17$Mean_2013)),paste("R",var_label(df15_17$Mean_2017)),paste("R",var_label(df15_17$Mean_2021)),
+               paste("R",var_label(df15_17$Mean_2022)),paste("R",var_label(df15_17$Mean_2023)),paste("R",var_label(df15_17$Mean_2024)),paste("R",var_label(df15_17$Mean_2029)),
+               paste("R",var_label(df15_17$Mean_2031)))
 results_m_3_random  <- tibble(ROI = rep(NA, length(sig_m_3)), OR = rep(NA, length(sig_m_3)),
                               "Low CI" = rep(NA, length(sig_m_3)), "High CI" = rep(NA, length(sig_m_3)),
                               "p-value" = rep(NA, length(sig_m_3)), " " = rep(NA, length(sig_m_3)))
@@ -685,25 +684,25 @@ for (i in 1:62){
   try(m_4.X <- MASS::polr(GROUP.A ~ df18_24[,i+32] + SITE_ID, data=df18_24, Hess = T))
   try(m_4.Y <- MASS::polr(GROUP.B ~ df18_24[,i+32] + SITE_ID, data=df18_24, Hess = T))
   try(m_4.Z <- MASS::polr(GROUP.C ~ df18_24[,i+32] + SITE_ID, data=df18_24, Hess = T))
-  try(pr_odds4[i,1]  <- brant(m_4.X)[1,3])
-  try(pr_odds4[i,2]  <- brant(m_4.Y)[1,3])
-  try(pr_odds4[i,3]  <- brant(m_4.Z)[1,3])
-  deviance4[i,]      <- c(summary(m_4.X)$deviance, summary(m_4.Y)$deviance, summary(m_4.Z)$deviance)
-  results_m_X4[[i]]  <- gtsummary::tbl_regression(m_4.X, exponentiate = T
-                                                  , estimate_fun = purrr::partial(style_ratio, digits = 3)
-                                                  , include = !SITE_ID
-  ) %>% gtsummary::add_global_p() %>%
-    gtsummary::add_significance_stars(hide_p = F, hide_se = T, hide_ci = F, pattern = "{p.value}{stars}")
-  results_m_Y4[[i]]  <- gtsummary::tbl_regression(m_4.Y, exponentiate = T
-                                                  , estimate_fun = purrr::partial(style_ratio, digits = 3)
-                                                  , include = !SITE_ID
-  ) %>% gtsummary::add_global_p() %>%
-    gtsummary::add_significance_stars(hide_p = F, hide_se = T, hide_ci = F, pattern = "{p.value}{stars}")
-  results_m_Z4[[i]]  <- gtsummary::tbl_regression(m_4.Z, exponentiate = T
-                                                  , estimate_fun = purrr::partial(style_ratio, digits = 3)
-                                                  , include = !SITE_ID
-  ) %>% gtsummary::add_global_p() %>%
-    gtsummary::add_significance_stars(hide_p = F, hide_se = T, hide_ci = F, pattern = "{p.value}{stars}")
+  # try(pr_odds4[i,1]  <- brant(m_4.X)[1,3])
+  # try(pr_odds4[i,2]  <- brant(m_4.Y)[1,3])
+  # try(pr_odds4[i,3]  <- brant(m_4.Z)[1,3])
+  # deviance4[i,]      <- c(summary(m_4.X)$deviance, summary(m_4.Y)$deviance, summary(m_4.Z)$deviance)
+  # results_m_X4[[i]]  <- gtsummary::tbl_regression(m_4.X, exponentiate = T
+  #                                                 , estimate_fun = purrr::partial(style_ratio, digits = 3)
+  #                                                 , include = !SITE_ID
+  # ) %>% gtsummary::add_global_p() %>%
+  #   gtsummary::add_significance_stars(hide_p = F, hide_se = T, hide_ci = F, pattern = "{p.value}{stars}")
+  # results_m_Y4[[i]]  <- gtsummary::tbl_regression(m_4.Y, exponentiate = T
+  #                                                 , estimate_fun = purrr::partial(style_ratio, digits = 3)
+  #                                                 , include = !SITE_ID
+  # ) %>% gtsummary::add_global_p() %>%
+  #   gtsummary::add_significance_stars(hide_p = F, hide_se = T, hide_ci = F, pattern = "{p.value}{stars}")
+  # results_m_Z4[[i]]  <- gtsummary::tbl_regression(m_4.Z, exponentiate = T
+  #                                                 , estimate_fun = purrr::partial(style_ratio, digits = 3)
+  #                                                 , include = !SITE_ID
+  # ) %>% gtsummary::add_global_p() %>%
+  #   gtsummary::add_significance_stars(hide_p = F, hide_se = T, hide_ci = F, pattern = "{p.value}{stars}")
   if(lmtest::coeftest(m_4.X)[1,4] < 0.05 | lmtest::coeftest(m_4.Y)[1,4] < 0.05 | lmtest::coeftest(m_4.Z)[1,4] < 0.05) {sig_m_4[i] <- colnames(df)[i+32]}
 }
 sig_m_4 <- sig_m_4[!is.na(sig_m_4)]
@@ -730,13 +729,13 @@ system("paplay /usr/share/sounds/freedesktop/stereo/complete.oga")
 sig_m_4_random      <- rep(NA,length(sig_m_4))
 # Defining blank list for model results
 sig_m_4
-sig_m_4.n <- c(paste("Left",var_label(df18_24$Mean_1009)),paste("Left",var_label(df18_24$Mean_1010)),paste("Left",var_label(df18_24$Mean_1015)),paste("Left",var_label(df18_24$Mean_1020)),
-               paste("Left",var_label(df18_24$Mean_1023)),paste("Left",var_label(df18_24$Mean_1026)),paste("Left",var_label(df18_24$Mean_1027)),paste("Left",var_label(df18_24$Mean_1028)),
-               paste("Left",var_label(df18_24$Mean_1030)),paste("Left",var_label(df18_24$Mean_1031)),paste("Left",var_label(df18_24$Mean_1034)),paste("Left",var_label(df18_24$Mean_1035)),
-               paste("Right",var_label(df18_24$Mean_2003)),paste("Right",var_label(df18_24$Mean_2006)),paste("Right",var_label(df18_24$Mean_2009)),paste("Right",var_label(df18_24$Mean_2010)),
-               paste("Right",var_label(df18_24$Mean_2015)),paste("Right",var_label(df18_24$Mean_2020)),paste("Right",var_label(df18_24$Mean_2022)),paste("Right",var_label(df18_24$Mean_2023)),
-               paste("Right",var_label(df18_24$Mean_2024)),paste("Right",var_label(df18_24$Mean_2025)),paste("Right",var_label(df18_24$Mean_2027)),paste("Right",var_label(df18_24$Mean_2028)),
-               paste("Right",var_label(df18_24$Mean_2030)),paste("Right",var_label(df18_24$Mean_2034)))
+sig_m_4.n <- c(paste("L",var_label(df18_24$Mean_1009)),paste("L",var_label(df18_24$Mean_1010)),paste("L",var_label(df18_24$Mean_1015)),paste("L",var_label(df18_24$Mean_1020)),
+               paste("L",var_label(df18_24$Mean_1023)),paste("L",var_label(df18_24$Mean_1026)),paste("L",var_label(df18_24$Mean_1027)),paste("L",var_label(df18_24$Mean_1028)),
+               paste("L",var_label(df18_24$Mean_1030)),paste("L",var_label(df18_24$Mean_1031)),paste("L",var_label(df18_24$Mean_1034)),paste("L",var_label(df18_24$Mean_1035)),
+               paste("R",var_label(df18_24$Mean_2003)),paste("R",var_label(df18_24$Mean_2006)),paste("R",var_label(df18_24$Mean_2009)),paste("R",var_label(df18_24$Mean_2010)),
+               paste("R",var_label(df18_24$Mean_2015)),paste("R",var_label(df18_24$Mean_2020)),paste("R",var_label(df18_24$Mean_2022)),paste("R",var_label(df18_24$Mean_2023)),
+               paste("R",var_label(df18_24$Mean_2024)),paste("R",var_label(df18_24$Mean_2025)),paste("R",var_label(df18_24$Mean_2027)),paste("R",var_label(df18_24$Mean_2028)),
+               paste("R",var_label(df18_24$Mean_2030)),paste("R",var_label(df18_24$Mean_2034)))
 results_m_4_random  <- tibble(ROI = rep(NA, length(sig_m_4)), OR = rep(NA, length(sig_m_4)),
                               "Low CI" = rep(NA, length(sig_m_4)), "High CI" = rep(NA, length(sig_m_4)),
                               "p-value" = rep(NA, length(sig_m_4)), " " = rep(NA, length(sig_m_4)))
@@ -911,7 +910,7 @@ gt::gtsave(gt::gt(results_m_4_random) %>% gt::fmt_number(decimals = 4) %>%
 df18_24.m <- df18_24 %>%
   select(GROUP.C, all_of(sig_m_4[-c(4,7,13,18,23)]))
 df18_24.m <- melt(df18_24.m, id.vars = 'GROUP.C') #redefinir pra pegar só colunas que foram sig
-levels(df18_24.m$variable) <- sig_m_4.n
+levels(df18_24.m$variable) <- sig_m_4.n[-c(4,7,13,18,23)]
 sizes <- ggplot(df18_24.m, aes(y = value)) +
   geom_boxplot(aes(x=GROUP.C, y = value))+
   scale_x_discrete(labels = c("Ctrl F", "Ctrl M", "ASD"))+
