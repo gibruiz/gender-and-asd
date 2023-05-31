@@ -3,7 +3,7 @@ setwd("./results")
 if(!require(pacman)) install.packages("pacman")
 library(pacman)
 pacman::p_load(dplyr, car, ordinal, lmtest, gtsummary, reshape2, ggplot2,
-               gtools, forcats, brant, labelled, gt)
+               gtools, forcats, brant, labelled, gt, ggrain, ggpp)
 
 ######## MODELS F and G ########
 #outcome: group    predictor: CT   cov: site
@@ -223,16 +223,58 @@ gt::gtsave(gt::gt(results_m_1_random) %>% gt::fmt_number(decimals = 4) %>%
              tab_options(column_labels.font.weight = "bold"), filename = "6_10ModelG.png")
 
 df6_10.m <- df6_10 %>%
-  select(GROUP.C, sig_m_1[-c(2,3,6,9,12)])
+  select(GROUP.C, sig_m_1[c(1,7,15)])
 df6_10.m <- melt(df6_10.m, id.vars = 'GROUP.C') #redefinir pra pegar só colunas que foram sig
-levels(df6_10.m$variable) <- sig_m_1.n[-c(2,3,6,9,12)]
-sizes <- ggplot(df6_10.m, aes(y = value)) +
-  geom_boxplot(aes(x=GROUP.C, y = value))+
-  scale_x_discrete(labels = c("Ctrl F", "Ctrl M", "ASD"))+
-  facet_wrap( ~ variable)+
+levels(df6_10.m$variable) <- sig_m_1.n[c(1,7,15)]
+sizes1a <- ggplot(df6_10.m, aes(1, y = value, fill = GROUP.C)) +
+  geom_rain(alpha = .5, cov = "GROUP.C",
+            point.args.pos = list(position = position_dodge2(.1)),
+            boxplot.args = list(width = .1, outlier.shape = NA),
+            boxplot.args.pos = list(position = ggpp::position_dodgenudge(x = .1)),
+            violin.args = list(width = -.2, alpha = .5),
+            violin.args.pos = list(side = "l", position = position_nudge(.17))
+  )+
+  theme(aspect.ratio = 1) +
+  facet_wrap( ~ variable) +
   ylab("Thickness (mm)")+ xlab("Group")
-sizes
-ggsave("roimeans6_10.png")
+sizes1a
+ggsave("roimeans6_10a.png")
+
+df6_10.m <- df6_10 %>%
+  select(GROUP.C, sig_m_1[c(4,5,8,13,14)])
+df6_10.m <- melt(df6_10.m, id.vars = 'GROUP.C') #redefinir pra pegar só colunas que foram sig
+levels(df6_10.m$variable) <- sig_m_1.n[c(4,5,8,13,14)]
+sizes1b <- ggplot(df6_10.m, aes(1, y = value, fill = GROUP.C)) +
+  geom_rain(alpha = .5, cov = "GROUP.C",
+            point.args.pos = list(position = position_dodge2(.1)),
+            boxplot.args = list(width = .1, outlier.shape = NA),
+            boxplot.args.pos = list(position = ggpp::position_dodgenudge(x = .1)),
+            violin.args = list(width = -.2, alpha = .5),
+            violin.args.pos = list(side = "l", position = position_nudge(.17))
+  )+
+  theme(aspect.ratio = 1) +
+  facet_wrap( ~ variable) +
+  ylab("Thickness (mm)")+ xlab("Group")
+sizes1b
+ggsave("roimeans6_10b.png")
+
+df6_10.m <- df6_10 %>%
+  select(GROUP.C, sig_m_1[c(10,11)])
+df6_10.m <- melt(df6_10.m, id.vars = 'GROUP.C') #redefinir pra pegar só colunas que foram sig
+levels(df6_10.m$variable) <- sig_m_1.n[c(10,11)]
+sizes1c <- ggplot(df6_10.m, aes(1, y = value, fill = GROUP.C)) +
+  geom_rain(alpha = .5, cov = "GROUP.C",
+            point.args.pos = list(position = position_dodge2(.1)),
+            boxplot.args = list(width = .1, outlier.shape = NA),
+            boxplot.args.pos = list(position = ggpp::position_dodgenudge(x = .1)),
+            violin.args = list(width = -.2, alpha = .5),
+            violin.args.pos = list(side = "l", position = position_nudge(.17))
+  )+
+  theme(aspect.ratio = 1) +
+  facet_wrap( ~ variable) +
+  ylab("Thickness (mm)")+ xlab("Group")
+sizes1c
+ggsave("roimeans6_10c.png")
 
 
 ############ AGE RANGE 2 -> 11 to 14 yo ############
@@ -418,12 +460,18 @@ df11_14.m <- df11_14 %>%
   select(GROUP.C, all_of(sig_m_2[c(2,4,8,11)]))
 df11_14.m <- melt(df11_14.m, id.vars = 'GROUP.C') #redefinir pra pegar só colunas que foram sig
 levels(df11_14.m$variable) <- sig_m_2.n[c(2,4,8,11)]
-sizes <- ggplot(df11_14.m, aes(y = value)) +
-  geom_boxplot(aes(x=GROUP.C, y = value))+
-  scale_x_discrete(labels = c("Ctrl F", "Ctrl M", "ASD"))+
-  facet_wrap( ~ variable)+
+sizes2 <- ggplot(df11_14.m, aes(1, y = value, fill = GROUP.C)) +
+  geom_rain(alpha = .5, cov = "GROUP.C",
+            point.args.pos = list(position = position_dodge2(.1)),
+            boxplot.args = list(width = .1, outlier.shape = NA),
+            boxplot.args.pos = list(position = ggpp::position_dodgenudge(x = .1)),
+            violin.args = list(width = -.2, alpha = .5),
+            violin.args.pos = list(side = "l", position = position_nudge(.17))
+  )+
+  theme(aspect.ratio = 1) +
+  facet_wrap( ~ variable) +
   ylab("Thickness (mm)")+ xlab("Group")
-sizes
+sizes2
 ggsave("roimeans11_14.png")
 
 ############ AGE RANGE 3 -> 15 to 17 yo ############
@@ -463,25 +511,25 @@ for (i in 1:62){
   try(m_3.X <- MASS::polr(GROUP.A ~ df15_17[,i+32] + SITE_ID, data=df15_17, Hess = T))
   try(m_3.Y <- MASS::polr(GROUP.B ~ df15_17[,i+32] + SITE_ID, data=df15_17, Hess = T))
   try(m_3.Z <- MASS::polr(GROUP.C ~ df15_17[,i+32] + SITE_ID, data=df15_17, Hess = T))
-  try(pr_odds3[i,1]  <- brant(m_3.X)[1,3])
-  try(pr_odds3[i,2]  <- brant(m_3.Y)[1,3])
-  try(pr_odds3[i,3]  <- brant(m_3.Z)[1,3])
-  deviance3[i,]      <- c(summary(m_3.X)$deviance, summary(m_3.Y)$deviance, summary(m_3.Z)$deviance)
-  results_m_X3[[i]]  <- gtsummary::tbl_regression(m_3.X, exponentiate = T
-                                                  , estimate_fun = purrr::partial(style_ratio, digits = 3)
-                                                  , include = !SITE_ID
-  ) %>% gtsummary::add_global_p() %>%
-    gtsummary::add_significance_stars(hide_p = F, hide_se = T, hide_ci = F, pattern = "{p.value}{stars}")
-  results_m_Y3[[i]]  <- gtsummary::tbl_regression(m_3.Y, exponentiate = T
-                                                  , estimate_fun = purrr::partial(style_ratio, digits = 3)
-                                                  , include = !SITE_ID
-  ) %>% gtsummary::add_global_p() %>%
-    gtsummary::add_significance_stars(hide_p = F, hide_se = T, hide_ci = F, pattern = "{p.value}{stars}")
-  results_m_Z3[[i]]  <- gtsummary::tbl_regression(m_3.Z, exponentiate = T
-                                                  , estimate_fun = purrr::partial(style_ratio, digits = 3)
-                                                  , include = !SITE_ID
-  ) %>% gtsummary::add_global_p() %>%
-    gtsummary::add_significance_stars(hide_p = F, hide_se = T, hide_ci = F, pattern = "{p.value}{stars}")
+  # try(pr_odds3[i,1]  <- brant(m_3.X)[1,3])
+  # try(pr_odds3[i,2]  <- brant(m_3.Y)[1,3])
+  # try(pr_odds3[i,3]  <- brant(m_3.Z)[1,3])
+  # deviance3[i,]      <- c(summary(m_3.X)$deviance, summary(m_3.Y)$deviance, summary(m_3.Z)$deviance)
+  # results_m_X3[[i]]  <- gtsummary::tbl_regression(m_3.X, exponentiate = T
+  #                                                 , estimate_fun = purrr::partial(style_ratio, digits = 3)
+  #                                                 , include = !SITE_ID
+  # ) %>% gtsummary::add_global_p() %>%
+  #   gtsummary::add_significance_stars(hide_p = F, hide_se = T, hide_ci = F, pattern = "{p.value}{stars}")
+  # results_m_Y3[[i]]  <- gtsummary::tbl_regression(m_3.Y, exponentiate = T
+  #                                                 , estimate_fun = purrr::partial(style_ratio, digits = 3)
+  #                                                 , include = !SITE_ID
+  # ) %>% gtsummary::add_global_p() %>%
+  #   gtsummary::add_significance_stars(hide_p = F, hide_se = T, hide_ci = F, pattern = "{p.value}{stars}")
+  # results_m_Z3[[i]]  <- gtsummary::tbl_regression(m_3.Z, exponentiate = T
+  #                                                 , estimate_fun = purrr::partial(style_ratio, digits = 3)
+  #                                                 , include = !SITE_ID
+  # ) %>% gtsummary::add_global_p() %>%
+  #   gtsummary::add_significance_stars(hide_p = F, hide_se = T, hide_ci = F, pattern = "{p.value}{stars}")
   if(lmtest::coeftest(m_3.X)[1,4] < 0.05 | lmtest::coeftest(m_3.Y)[1,4] < 0.05 | lmtest::coeftest(m_3.Z)[1,4] < 0.05) {sig_m_3[i] <- colnames(df)[i+32]}
 }
 system("paplay /usr/share/sounds/freedesktop/stereo/complete.oga")
@@ -908,13 +956,74 @@ gt::gtsave(gt::gt(results_m_4_random) %>% gt::fmt_number(decimals = 4) %>%
              tab_options(column_labels.font.weight = "bold"), filename = "18_24ModelG.png")
 
 df18_24.m <- df18_24 %>%
-  select(GROUP.C, all_of(sig_m_4[-c(4,7,13,18,23)]))
+  select(GROUP.C, all_of(sig_m_4[c(1,2,3,5,16,17,20)]))
 df18_24.m <- melt(df18_24.m, id.vars = 'GROUP.C') #redefinir pra pegar só colunas que foram sig
-levels(df18_24.m$variable) <- sig_m_4.n[-c(4,7,13,18,23)]
-sizes <- ggplot(df18_24.m, aes(y = value)) +
-  geom_boxplot(aes(x=GROUP.C, y = value))+
-  scale_x_discrete(labels = c("Ctrl F", "Ctrl M", "ASD"))+
-  facet_wrap( ~ variable)+
+levels(df18_24.m$variable) <- sig_m_4.n[c(1,2,3,5,16,17,20)]
+sizes4a <-  ggplot(df18_24.m, aes(1, y = value, fill = GROUP.C)) +
+  geom_rain(alpha = .5, cov = "GROUP.C",
+            point.args.pos = list(position = position_dodge2(.1)),
+            boxplot.args = list(width = .1, outlier.shape = NA),
+            boxplot.args.pos = list(position = ggpp::position_dodgenudge(x = .1)),
+            violin.args = list(width = -.2, alpha = .5),
+            violin.args.pos = list(side = "l", position = position_nudge(.17))
+  )+
+  theme(aspect.ratio = 1) +
+  facet_wrap( ~ variable) +
   ylab("Thickness (mm)")+ xlab("Group")
-sizes
-ggsave("roimeans18_24.png")
+sizes4a
+ggsave("roimeans18_24a.png")
+
+df18_24.m <- df18_24 %>%
+  select(GROUP.C, all_of(sig_m_4[c(6,12,14,15)]))
+df18_24.m <- melt(df18_24.m, id.vars = 'GROUP.C') #redefinir pra pegar só colunas que foram sig
+levels(df18_24.m$variable) <- sig_m_4.n[c(6,12,14,15)]
+sizes4b <-  ggplot(df18_24.m, aes(1, y = value, fill = GROUP.C)) +
+  geom_rain(alpha = .5, cov = "GROUP.C",
+            point.args.pos = list(position = position_dodge2(.1)),
+            boxplot.args = list(width = .1, outlier.shape = NA),
+            boxplot.args.pos = list(position = ggpp::position_dodgenudge(x = .1)),
+            violin.args = list(width = -.2, alpha = .5),
+            violin.args.pos = list(side = "l", position = position_nudge(.17))
+  )+
+  theme(aspect.ratio = 1) +
+  facet_wrap( ~ variable) +
+  ylab("Thickness (mm)")+ xlab("Group")
+sizes4b
+ggsave("roimeans18_24b.png")
+
+
+df18_24.m <- df18_24 %>%
+  select(GROUP.C, all_of(sig_m_4[c(8,9,10,11,22,24,25,26)]))
+df18_24.m <- melt(df18_24.m, id.vars = 'GROUP.C') #redefinir pra pegar só colunas que foram sig
+levels(df18_24.m$variable) <- sig_m_4.n[c(8,9,10,11,22,24,25,26)]
+sizes4c <-  ggplot(df18_24.m, aes(1, y = value, fill = GROUP.C)) +
+  geom_rain(alpha = .5, cov = "GROUP.C",
+            point.args.pos = list(position = position_dodge2(.1)),
+            boxplot.args = list(width = .1, outlier.shape = NA),
+            boxplot.args.pos = list(position = ggpp::position_dodgenudge(x = .1)),
+            violin.args = list(width = -.2, alpha = .5),
+            violin.args.pos = list(side = "l", position = position_nudge(.17))
+  )+
+  theme(aspect.ratio = 1) +
+  facet_wrap( ~ variable) +
+  ylab("Thickness (mm)")+ xlab("Group")
+sizes4c
+ggsave("roimeans18_24c.png")
+
+df18_24.m <- df18_24 %>%
+  select(GROUP.C, all_of(sig_m_4[c(19,21)]))
+df18_24.m <- melt(df18_24.m, id.vars = 'GROUP.C') #redefinir pra pegar só colunas que foram sig
+levels(df18_24.m$variable) <- sig_m_4.n[c(19,21)]
+sizes4d <-  ggplot(df18_24.m, aes(1, y = value, fill = GROUP.C)) +
+  geom_rain(alpha = .5, cov = "GROUP.C",
+            point.args.pos = list(position = position_dodge2(.1)),
+            boxplot.args = list(width = .1, outlier.shape = NA),
+            boxplot.args.pos = list(position = ggpp::position_dodgenudge(x = .1)),
+            violin.args = list(width = -.2, alpha = .5),
+            violin.args.pos = list(side = "l", position = position_nudge(.17))
+  )+
+  theme(aspect.ratio = 1) +
+  facet_wrap( ~ variable, nr = 1) +
+  ylab("Thickness (mm)")+ xlab("Group")
+sizes4d
+ggsave("roimeans18_24d.png")
