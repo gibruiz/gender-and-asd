@@ -54,10 +54,10 @@ for (i in 1:62){
   m5_1 <-lm(df6_10[,i+32] ~ DX_GROUP * SEX + SITE_ID + TOTAL_VOLUME, data=df6_10)
   
   results_m1_1[i,] <-summary(m1_1)$coefficient[2,1:4]
-  results_m2_1[i,] <-summary(m2_1)$coefficient[2,1:4]
-  results_m3_1[i,] <-summary(m3_1)$coefficient[2,1:4]
-  results_m4_1[i,] <-summary(m4_1)$coefficient[2,1:4]
-  results_m5_1[i,] <-summary(m5_1)$coefficient[2,1:4]
+  results_m2_1[i,] <-summary(m2_1)$coefficient[4,1:4]
+  results_m3_1[i,] <-summary(m3_1)$coefficient[16,1:4]
+  results_m4_1[i,] <-summary(m4_1)$coefficient[5,1:4]
+  results_m5_1[i,] <-summary(m5_1)$coefficient[17,1:4]
 }
 # Blank table for FDR correction
 results_m2_1fdr <- data.frame(roi_names, results_m2_1)
@@ -111,10 +111,10 @@ for (i in 1:62){
   m5_2 <-lm(df11_14[,i+32] ~ DX_GROUP * SEX + SITE_ID + TOTAL_VOLUME, data=df11_14)
   
   results_m1_2[i,] <-summary(m1_2)$coefficient[2,1:4]
-  results_m2_2[i,] <-summary(m2_2)$coefficient[2,1:4]
-  results_m3_2[i,] <-summary(m3_2)$coefficient[2,1:4]
-  results_m4_2[i,] <-summary(m4_2)$coefficient[2,1:4]
-  results_m5_2[i,] <-summary(m5_2)$coefficient[2,1:4]
+  results_m2_2[i,] <-summary(m2_2)$coefficient[4,1:4]
+  results_m3_2[i,] <-summary(m3_2)$coefficient[19,1:4]
+  results_m4_2[i,] <-summary(m4_2)$coefficient[5,1:4]
+  results_m5_2[i,] <-summary(m5_2)$coefficient[20,1:4]
 }
 # Blank table for FDR correction
 results_m1_2fdr <- data.frame(roi_names, results_m1_2)
@@ -168,10 +168,10 @@ for (i in 1:62){
   m5_3 <-lm(df15_17[,i+32] ~ DX_GROUP * SEX + SITE_ID + TOTAL_VOLUME, data=df15_17)
   
   results_m1_3[i,] <-summary(m1_3)$coefficient[2,1:4]
-  results_m2_3[i,] <-summary(m2_3)$coefficient[2,1:4]
-  results_m3_3[i,] <-summary(m3_3)$coefficient[2,1:4]
-  results_m4_3[i,] <-summary(m4_3)$coefficient[2,1:4]
-  results_m5_3[i,] <-summary(m5_3)$coefficient[2,1:4]
+  results_m2_3[i,] <-summary(m2_3)$coefficient[4,1:4]
+  results_m3_3[i,] <-summary(m3_3)$coefficient[18,1:4]
+  results_m4_3[i,] <-summary(m4_3)$coefficient[5,1:4]
+  results_m5_3[i,] <-summary(m5_3)$coefficient[19,1:4]
 }
 # Blank table for FDR correction
 results_m1_3fdr <- data.frame(roi_names, results_m1_3)
@@ -225,10 +225,10 @@ for (i in 1:62){
   m5_4 <-lm(df18_24[,i+32] ~ DX_GROUP * SEX + SITE_ID + TOTAL_VOLUME, data=df18_24)
   
   results_m1_4[i,] <-summary(m1_4)$coefficient[2,1:4]
-  results_m2_4[i,] <-summary(m2_4)$coefficient[2,1:4]
-  results_m3_4[i,] <-summary(m3_4)$coefficient[2,1:4]
-  results_m4_4[i,] <-summary(m4_4)$coefficient[2,1:4]
-  results_m5_4[i,] <-summary(m5_4)$coefficient[2,1:4]
+  results_m2_4[i,] <-summary(m2_4)$coefficient[4,1:4]
+  results_m3_4[i,] <-summary(m3_4)$coefficient[14,1:4]
+  results_m4_4[i,] <-summary(m4_4)$coefficient[5,1:4]
+  results_m5_4[i,] <-summary(m5_4)$coefficient[15,1:4]
 }
 # Blank table for FDR correction
 results_m1_4fdr <- data.frame(roi_names, results_m1_4)
