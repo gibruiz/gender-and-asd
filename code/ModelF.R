@@ -3,7 +3,7 @@ setwd("./results")
 if(!require(pacman)) install.packages("pacman")
 library(pacman)
 pacman::p_load(dplyr, car, ordinal, lmtest, gtsummary, reshape2, ggplot2,
-               gtools, forcats, brant, labelled, gt, ggrain, ggpp)
+               gtools, forcats, brant, labelled, gt, ggrain, ggpp, cowplot)
 
 ######## MODELS F and G ########
 #outcome: group    predictor: CT   cov: site
@@ -234,7 +234,7 @@ sizes1a <- ggplot(df6_10.m, aes(1, y = value, fill = GROUP.C)) +
             violin.args = list(width = -.2, alpha = .5),
             violin.args.pos = list(side = "l", position = position_nudge(.17))
   )+
-  theme(aspect.ratio = 1) +
+  theme(aspect.ratio = 1, legend.position = "none") +
   facet_wrap( ~ variable) +
   ylab("Thickness (mm)")+ xlab("Group")
 sizes1a
@@ -252,7 +252,7 @@ sizes1b <- ggplot(df6_10.m, aes(1, y = value, fill = GROUP.C)) +
             violin.args = list(width = -.2, alpha = .5),
             violin.args.pos = list(side = "l", position = position_nudge(.17))
   )+
-  theme(aspect.ratio = 1) +
+  theme(aspect.ratio = 1, legend.position = "none") +
   facet_wrap( ~ variable) +
   ylab("Thickness (mm)")+ xlab("Group")
 sizes1b
@@ -270,11 +270,29 @@ sizes1c <- ggplot(df6_10.m, aes(1, y = value, fill = GROUP.C)) +
             violin.args = list(width = -.2, alpha = .5),
             violin.args.pos = list(side = "l", position = position_nudge(.17))
   )+
-  theme(aspect.ratio = 1) +
+  theme(aspect.ratio = 1, legend.position = "none") +
   facet_wrap( ~ variable) +
   ylab("Thickness (mm)")+ xlab("Group")
 sizes1c
 ggsave("roimeans6_10c.png")
+
+df6_10.m <- df6_10 %>%
+  select(GROUP.C, sig_m_1[c(1,4,5,7,8,10,11,13,14,15)])
+df6_10.m <- melt(df6_10.m, id.vars = 'GROUP.C') #redefinir pra pegar só colunas que foram sig
+levels(df6_10.m$variable) <- sig_m_1.n[c(1,4,5,7,8,10,11,13,14,15)]
+sizes1 <- ggplot(df6_10.m, aes(1, y = value, fill = GROUP.C)) +
+  geom_rain(alpha = .5, cov = "GROUP.C",
+            point.args.pos = list(position = position_dodge2(.1)),
+            boxplot.args = list(width = .1, outlier.shape = NA),
+            boxplot.args.pos = list(position = ggpp::position_dodgenudge(x = .1)),
+            violin.args = list(width = -.2, alpha = .5),
+            violin.args.pos = list(side = "l", position = position_nudge(.17))
+  )+
+  theme(aspect.ratio = 1, legend.position = "none") +
+  facet_wrap( ~ variable) +
+  ylab("Thickness (mm)")+ xlab("Group")
+sizes1
+ggsave("roimeans6_10.png")
 
 
 ############ AGE RANGE 2 -> 11 to 14 yo ############
@@ -968,7 +986,7 @@ sizes4a <-  ggplot(df18_24.m, aes(1, y = value, fill = GROUP.C)) +
             violin.args.pos = list(side = "l", position = position_nudge(.17))
   )+
   theme(aspect.ratio = 1) +
-  facet_wrap( ~ variable) +
+  facet_wrap( ~ variable, nr = 2) +
   ylab("Thickness (mm)")+ xlab("Group")
 sizes4a
 ggsave("roimeans18_24a.png")
@@ -1005,7 +1023,7 @@ sizes4c <-  ggplot(df18_24.m, aes(1, y = value, fill = GROUP.C)) +
             violin.args.pos = list(side = "l", position = position_nudge(.17))
   )+
   theme(aspect.ratio = 1) +
-  facet_wrap( ~ variable) +
+  facet_wrap( ~ variable, nr = 2) +
   ylab("Thickness (mm)")+ xlab("Group")
 sizes4c
 ggsave("roimeans18_24c.png")
@@ -1027,3 +1045,22 @@ sizes4d <-  ggplot(df18_24.m, aes(1, y = value, fill = GROUP.C)) +
   ylab("Thickness (mm)")+ xlab("Group")
 sizes4d
 ggsave("roimeans18_24d.png")
+
+
+df18_24.m <- df18_24 %>%
+  select(GROUP.C, all_of(sig_m_4[-c(4,7,13,18,23)]))
+df18_24.m <- melt(df18_24.m, id.vars = 'GROUP.C') #redefinir pra pegar só colunas que foram sig
+levels(df18_24.m$variable) <- sig_m_4.n[-c(4,7,13,18,23)]
+sizes4 <-  ggplot(df18_24.m, aes(1, y = value, fill = GROUP.C)) +
+  geom_rain(alpha = .5, cov = "GROUP.C",
+            point.args.pos = list(position = position_dodge2(.1)),
+            boxplot.args = list(width = .1, outlier.shape = NA),
+            boxplot.args.pos = list(position = ggpp::position_dodgenudge(x = .1)),
+            violin.args = list(width = -.2, alpha = .5),
+            violin.args.pos = list(side = "l", position = position_nudge(.17))
+  )+
+  theme(aspect.ratio = 1) +
+  facet_wrap( ~ variable) +
+  ylab("Thickness (mm)")+ xlab("Group")
+sizes4
+ggsave("roimeans18_24.png")
